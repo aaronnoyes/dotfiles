@@ -1,5 +1,6 @@
 local options = {
 	number = true,
+	cursorline = true
 }
 
 for k, v in pairs(options) do
