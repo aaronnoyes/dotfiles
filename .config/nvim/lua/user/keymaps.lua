@@ -2,7 +2,7 @@ local opts = { noremap = true, silent = true }
 
 local term_opts = { silent = true }
 
-local keymap = vim.api.nvim_set_keymap
+local keymap = vim.keymap.set
 
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
@@ -20,3 +20,5 @@ keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 keymap("i", "jk", "<ESC>", opts)
+
+keymap("n", "K", vim.lsp.buf.hover, opts)
