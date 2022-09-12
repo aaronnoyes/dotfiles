@@ -1,5 +1,5 @@
 vim.g.catppuccin_flavour = "frappe" -- latte, frappe, macchiato, mocha
 
---require("catppuccin").setup()
+require("catppuccin").setup()
 
-vim.cmd [[colorscheme substrata]]
+vim.cmd [[colorscheme catppuccin"]]
