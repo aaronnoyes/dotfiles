@@ -1,7 +1,8 @@
 local options = {
 	number = true,
 	cursorline = true,
-	termguicolors = true
+	termguicolors = true,
+	tabstop = 4
 }
 
 for k, v in pairs(options) do
