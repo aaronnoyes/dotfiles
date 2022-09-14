@@ -1,5 +1,3 @@
-vim.g.catppuccin_flavour = "frappe" -- latte, frappe, macchiato, mocha
 
-require("catppuccin").setup()
-
-vim.cmd [[colorscheme catppuccin"]]
+require("no-clown-fiesta").setup({})
+vim.cmd [[colorscheme no-clown-fiesta"]]

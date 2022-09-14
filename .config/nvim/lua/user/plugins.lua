@@ -13,7 +13,6 @@ return require('packer').startup(function(use)
 	use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}
 	use 'moll/vim-bbye'
 	use 'folke/which-key.nvim'
-	use { "catppuccin/nvim", as = "catppuccin" }
 	use {
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
@@ -27,4 +26,9 @@ return require('packer').startup(function(use)
 	use 'L3MON4D3/LuaSnip'
 	use 'saadparwaiz1/cmp_luasnip'
 	use 'arzg/vim-substrata'
+	use 'aktersnurra/no-clown-fiesta.nvim'
+	use {
+		'nvim-lualine/lualine.nvim',
+		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    }
 end)
