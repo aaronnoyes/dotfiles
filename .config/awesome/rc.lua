@@ -602,4 +602,8 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 --beautiful.useless_gap = 10
 
-
+client.connect_signal("manage", function (c)
+    c.shape = function(cr,w,h)
+        gears.shape.rounded_rect(cr,w,h,10)
+    end
+end)
