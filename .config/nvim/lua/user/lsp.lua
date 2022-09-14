@@ -59,36 +59,17 @@ cmp.setup.cmdline(':', {
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-lsp['tsserver'].setup{
-	capabilities = capabilities
+require("mason-lspconfig").setup_handlers {
+		function (server_name)
+				lsp[server_name].setup {
+						capabilities = capabilities
+				}
+		end,
+		--manual setup can go here
 }
-
-lsp['sumneko_lua'].setup{
-	capabilities = capabilities
-}
-
-lsp['rust_analyzer'].setup({
-	capabilities = capabilities,
-	settings = {
-		["rust-analyzer"] = {
-			imports = {
-				granularity = {
-					group = "module",
-				},
-				prefix = "self",
-			},
-			cargo = {
-				buildScripts = {
-					enable = true,
-				},
-			},
-			procMacro = {
-				enable = true
-			},
-		}
-	}
-})
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { 
 		border = "rounded",
 })
+
+
