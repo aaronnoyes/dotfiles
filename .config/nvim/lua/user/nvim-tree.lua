@@ -1,4 +1,24 @@
-require("nvim-tree").setup()
+local gheight = vim.api.nvim_list_uis()[1].height
+local gwidth = vim.api.nvim_list_uis()[1].width
+local width = 70
+local height = 30
+
+require("nvim-tree").setup{
+		view = {
+--				side = "left",
+				float = {
+				  enable = true,
+				  open_win_config = {
+					relative = "editor",
+					border = "rounded",
+					width = width,
+					height = heigh,
+					row = (gheight - height) * 0.5,
+					col = (gwidth - width) * 0.5,
+				},
+        }},
+		
+}
 -- nvim-tree is also there in modified buffers so this function filter it out
 local modifiedBufs = function(bufs)
     local t = 0
