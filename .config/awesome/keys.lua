@@ -2,6 +2,20 @@ local awful = require("awful")
 local gears = require("gears")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
+local floating = false
+
+local function toggle_float()
+     floating = not floating
+
+	 if floating then
+		awful.layout.layouts = {awful.layout.suit.floating}
+		awful.layout.set(awful.layout.suit.floating)
+	 else
+        awful.layout.layouts = default_layouts
+		awful.layout.set(default_layouts[1])
+	 end
+end
+
 globalkeys = gears.table.join(
 	awful.key({ modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
 	awful.key({ modkey }, "Left", awful.tag.viewprev, { description = "view previous", group = "tag" }),
@@ -103,7 +117,10 @@ globalkeys = gears.table.join(
 	end),
 	awful.key({}, "XF86AudioMute", function()
 		awful.util.spawn("pamixer -t")
-	end)
+	end),
+	awful.key({modkey, "Shift"}, "f", function()
+			toggle_float()
+	end, {description = "toggle floating mode", group = "layout"})
 )
 
 
