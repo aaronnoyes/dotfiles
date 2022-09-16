@@ -1,4 +1,5 @@
 local theme_assets = require("beautiful.theme_assets")
+local gears = require("gears")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
@@ -39,6 +40,12 @@ theme.border_marked = "#91231c"
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
 
+theme.titlebar_bg_normal = "#151515"
+theme.titlebar_fg_normal = "e1e1e1"
+
+theme.titlebar_bg_focus = "#151515"
+theme.titlebar_fg_focus = "e1e1e1"
+
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
@@ -67,8 +74,8 @@ theme.menu_width  = dpi(100)
 --theme.bg_widget = "#cc0000"
 
 -- Define the image to load
-theme.titlebar_close_button_normal = themes_path.."default/titlebar/close_normal.png"
-theme.titlebar_close_button_focus  = themes_path.."default/titlebar/close_focus.png"
+theme.titlebar_close_button_normal = gears.filesystem.get_configuration_dir() .. "/close.png"
+theme.titlebar_close_button_focus  = gears.filesystem.get_configuration_dir() .. "/close.png"
 
 theme.titlebar_minimize_button_normal = themes_path.."default/titlebar/minimize_normal.png"
 theme.titlebar_minimize_button_focus  = themes_path.."default/titlebar/minimize_focus.png"

@@ -32,7 +32,7 @@ client.connect_signal("request::titlebars", function(c)
 
 	awful.titlebar(c):setup({
 		{ -- Left
-			awful.titlebar.widget.iconwidget(c),
+			--awful.titlebar.widget.iconwidget(c),
 			buttons = buttons,
 			layout = wibox.layout.fixed.horizontal,
 		},
@@ -45,10 +45,10 @@ client.connect_signal("request::titlebars", function(c)
 			layout = wibox.layout.flex.horizontal,
 		},
 		{ -- Right
-			awful.titlebar.widget.floatingbutton(c),
-			awful.titlebar.widget.maximizedbutton(c),
-			awful.titlebar.widget.stickybutton(c),
-			awful.titlebar.widget.ontopbutton(c),
+			--awful.titlebar.widget.floatingbutton(c),
+			--awful.titlebar.widget.maximizedbutton(c),
+			--awful.titlebar.widget.stickybutton(c),
+			--awful.titlebar.widget.ontopbutton(c),
 			awful.titlebar.widget.closebutton(c),
 			layout = wibox.layout.fixed.horizontal(),
 		},
