@@ -109,15 +109,15 @@ globalkeys = gears.table.join(
 	awful.key({}, "XF86MonBrightnessUp", function()
 		awful.util.spawn("light -A 5")
 	end),
-	-- awful.key({}, "XF86AudioLowerVolume", function()
-	-- 	awful.util.spawn("pamixer -d 5")
-	-- end),
-	-- awful.key({}, "XF86AudioRaiseVolume", function()
-	-- 	awful.util.spawn("pamixer -i 5")
-	-- end),
-	-- awful.key({}, "XF86AudioMute", function()
-	-- 	awful.util.spawn("pamixer -t")
-	-- end),
+	awful.key({}, "XF86AudioLowerVolume", function()
+		awful.util.spawn("pamixer -d 5")
+	end),
+	awful.key({}, "XF86AudioRaiseVolume", function()
+		awful.util.spawn("pamixer -i 5")
+	end),
+	awful.key({}, "XF86AudioMute", function()
+		awful.util.spawn("pamixer -t")
+	end),
 	awful.key({modkey, "Shift"}, "f", function()
 			toggle_float()
 	end, {description = "toggle floating mode", group = "layout"})
