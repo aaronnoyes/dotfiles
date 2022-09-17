@@ -2,6 +2,7 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 local awful = require("awful")
+local gears = require("gears")
 
 terminal = "kitty"
 modkey = "Mod4"
@@ -25,9 +26,26 @@ default_layouts = {
 	--awful.layout.suit.corner.se,
 }
 
+clientbuttons = gears.table.join(
+    awful.button({ }, 1, function (c)
+        c:emit_signal("request::activate", "mouse_click", {raise = true})
+    end),
+    awful.button({ modkey }, 1, function (c)
+        c:emit_signal("request::activate", "mouse_click", {raise = true})
+        awful.mouse.client.move(c)
+    end),
+    awful.button({ modkey }, 3, function (c)
+        c:emit_signal("request::activate", "mouse_click", {raise = true})
+        awful.mouse.client.resize(c)
+    end)
+)
+
 require("awful.autofocus")
 require("errors")
 require("screen")
 require("keys")
 require("rules")
 require("client")
+
+--awful.spawn.once("/usr/bin/volumeicon")
+-- awful.spawn.once("/usr/bin/nm-applet")
