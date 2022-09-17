@@ -71,26 +71,3 @@ client.connect_signal("unfocus", function(c)
 end)
 -- }}}
 
-local function rounded_corners(c)
-    c.shape = function(cr,w,h)
-      gears.shape.rounded_rect(cr,w,h,12)
-    end
-end
-
-local function squared_corners(c)
-    c.shape = gears.shape.rectangle
-end
-
-local function set_good_corners(c)
-    if not c.fullscreen then
-      rounded_corners(c)
-    else
-      squared_corners(c)
-    end
-end
-
-client.connect_signal("manage", function (c) set_good_corners(c) end)
-
-client.connect_signal("property::fullscreen", function(c) set_good_corners(c) end)
-
-client.connect_signal("property::maximized", function(c) set_good_corners(c) end)
