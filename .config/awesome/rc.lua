@@ -47,5 +47,4 @@ require("keys")
 require("rules")
 require("client")
 
---awful.spawn.once("/usr/bin/volumeicon")
--- awful.spawn.once("/usr/bin/nm-applet")
+awesome.spawn("picom")
