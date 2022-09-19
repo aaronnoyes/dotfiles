@@ -89,7 +89,13 @@ local mappings = {
     u = { "<cmd>PackerUpdate<cr>", "Update" },
   },
   ["m"] = {"<cmd>Mason<CR>", "Mason"},
-  ["n"] = {"<cmd>lua vim.lsp.buf.formatting()<CR>", "null-ls"}
+  ["n"] = {"<cmd>lua vim.lsp.buf.formatting()<CR>", "null-ls"},
+  t = {
+    name = "Telescope",
+    f = {"<cmd>lua require('telescope.builtin').find_files()<cr>", "find_files"},
+    g = {"<cmd>lua require('telescope.builtin').live_grep()<cr>", "live_grep"},
+    b = {"<cmd>lua require('telescope.builtin').buffers()<cr>", "buffers"},
+  }
 }
 
 which_key.setup(setup)

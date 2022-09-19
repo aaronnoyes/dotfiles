@@ -38,4 +38,9 @@ return require("packer").startup(function(use)
 	use("nvim-lua/plenary.nvim")
 	-- using packer.nvim
 	use("nmac427/guess-indent.nvim")
+	use({
+		"nvim-telescope/telescope.nvim",
+		tag = "0.1.0",
+		requires = { { "nvim-lua/plenary.nvim" } },
+	})
 end)
