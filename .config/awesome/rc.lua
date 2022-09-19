@@ -20,3 +20,4 @@ require("rules")
 require("client")
 
 awesome.spawn("picom")
+awesome.spawn("touchegg")
