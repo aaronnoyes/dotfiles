@@ -3,7 +3,7 @@ local beautiful = require("beautiful")
 local awful = require("awful")
 local wibox = require("wibox")
 
-beautiful.init("/home/user/.config/awesome/theme.lua")
+beautiful.init(gears.filesystem.get_dir("config") .. "/themes/default/theme.lua")
 
 local function set_wallpaper(s)
 	-- Wallpaper
