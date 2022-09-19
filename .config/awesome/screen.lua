@@ -20,7 +20,6 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
-
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = default_layouts
 -- }}}
@@ -28,7 +27,6 @@ awful.layout.layouts = default_layouts
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
-
 
 -- Create a widget and update its content using the output of a shell
 -- command every 10 seconds:
@@ -76,6 +74,25 @@ local taglist_buttons = gears.table.join(
 	end)
 )
 
+local tasklist_buttons = gears.table.join(
+	awful.button({}, 1, function(c)
+		if c == client.focus then
+			c.minimized = true
+		else
+			c:emit_signal("request::activate", "tasklist", { raise = true })
+		end
+	end),
+	awful.button({}, 3, function()
+		awful.menu.client_list({ theme = { width = 250 } })
+	end),
+	awful.button({}, 4, function()
+		awful.client.focus.byidx(1)
+	end),
+	awful.button({}, 5, function()
+		awful.client.focus.byidx(-1)
+	end)
+)
+
 awful.screen.connect_for_each_screen(function(s)
 	-- Wallpaper
 	set_wallpaper(s)
@@ -107,6 +124,12 @@ awful.screen.connect_for_each_screen(function(s)
 		screen = s,
 		filter = awful.widget.taglist.filter.all,
 		buttons = taglist_buttons,
+	})
+
+	s.mytasklist = awful.widget.tasklist({
+		screen = s,
+		filter = awful.widget.tasklist.filter.currenttags,
+		buttons = tasklist_buttons,
 	})
 
 	-- Create the wibox
