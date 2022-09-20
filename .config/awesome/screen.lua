@@ -161,13 +161,16 @@ awful.screen.connect_for_each_screen(function(s)
 	s.mywibox:setup({
 		layout = wibox.layout.align.horizontal,
 		expand = "none",
+		{
+			layout = wibox.layout.fixed.horizontal,
+			s.mytasklist,
+			s.mypromptbox
+		},
 		{ -- Left widgets
 			layout = wibox.layout.fixed.horizontal,
 			--mylauncher,
 			s.mytaglist,
-			s.mypromptbox,
 		},
-		s.mytasklist, -- Middle widget
 		{ -- Right widgets
 			layout = wibox.layout.fixed.horizontal,
 			mybatterybar,
