@@ -25,7 +25,7 @@ awful.layout.layouts = default_layouts
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = awful.widget.textclock(" %a %b %d, %l:%M%P", 15)
 
 -- Create a widget and update its content using the output of a shell
 -- command every 10 seconds:
