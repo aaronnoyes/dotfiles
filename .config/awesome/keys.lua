@@ -2,7 +2,18 @@ local awful = require("awful")
 local gears = require("gears")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
+local kb_bg_on = false
 local floating = false
+
+local function toggle_kb_rgb()
+    kb_bg_on = not kb_bg_on
+
+	if kb_bg_on then
+		awesome.spawn("/home/user/.local/bin/legion-kb-rgb Static 20,20,20,20,20,20,20,20,20,20,20,20")
+	else
+		awesome.spawn("/home/user/.local/bin/legion-kb-rgb Static 0,0,0,0,0,0,0,0,0,0,0,0")
+	end
+end
 
 local function toggle_float()
      floating = not floating
@@ -120,7 +131,8 @@ globalkeys = gears.table.join(
 	end),
 	awful.key({modkey, "Shift"}, "f", function()
 			toggle_float()
-	end, {description = "toggle floating mode", group = "layout"})
+	end, {description = "toggle floating mode", group = "layout"}),
+	awful.key({modkey}, "b", toggle_kb_rgb)
 )
 
 

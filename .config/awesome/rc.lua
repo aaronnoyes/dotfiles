@@ -21,3 +21,4 @@ require("client")
 
 awesome.spawn("picom")
 awesome.spawn("touchegg")
+awesome.spawn("/home/user/.local/bin/legion-kb-rgb Static 0,0,0,0,0,0,0,0,0,0,0,0")
