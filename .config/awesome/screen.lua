@@ -18,8 +18,7 @@ local function set_wallpaper(s)
 end
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", set_wallpaper)
-
+--screen.connect_signal("property::geometry", set_wallpaper)
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = default_layouts
 -- }}}
@@ -95,7 +94,8 @@ local tasklist_buttons = gears.table.join(
 
 awful.screen.connect_for_each_screen(function(s)
 	-- Wallpaper
-	set_wallpaper(s)
+	--set_wallpaper(s)
+    gears.wallpaper.set("#666A86")
 
 	-- Each screen has its own tag table.
 	awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
@@ -170,6 +170,7 @@ awful.screen.connect_for_each_screen(function(s)
 			layout = wibox.layout.fixed.horizontal,
 			--mylauncher,
 			s.mytaglist,
+			s.mypromptbox,
 		},
 		{ -- Right widgets
 			layout = wibox.layout.fixed.horizontal,
