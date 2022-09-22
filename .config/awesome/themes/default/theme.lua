@@ -8,6 +8,9 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
+theme.tasklist_shape = gears.shape.rounded_rect
+theme.tasklist_bg_focus = "#505050"
+
 theme.font          = "Deja Vu sans 10"
 
 theme.bg_normal     = "#151515"

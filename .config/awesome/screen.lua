@@ -2,6 +2,7 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local awful = require("awful")
 local wibox = require("wibox")
+local naughty = require("naughty")
 
 beautiful.init(gears.filesystem.get_dir("config") .. "/themes/default/theme.lua")
 
@@ -164,6 +165,21 @@ awful.screen.connect_for_each_screen(function(s)
 		screen = s,
 		filter = awful.widget.tasklist.filter.currenttags,
 		buttons = tasklist_buttons,
+		layout = {
+			spacing_widget = {
+				{
+					forced_width = 5,
+					forced_height = 24,
+					thickness = 0,
+					widget = wibox.widget.separator,
+				},
+				valign = "center",
+				halign = "center",
+				widget = wibox.container.place,
+			},
+			spacing = 5,
+			layout = wibox.layout.fixed.horizontal,
+		},
 		widget_template = {
 			{
 				{
@@ -171,27 +187,23 @@ awful.screen.connect_for_each_screen(function(s)
 					widget = awful.widget.clienticon,
 				},
 				margins = {
-					top = 2,
-					bottom = 2,
-					left = 4,
-					right = 4,
+						top = 2,
+						bottom = 2,
+						left = 2,
+						right = 2 
 				},
 				widget = wibox.container.margin,
 			},
-			id = "background_role",
-			color = "#ff0000",
-			widget = wibox.container.background,
-			shape = gears.shape.rounded_rect,
-			create_callback = function(self, c, index, objects) --luacheck: no unused
+			create_callback = function(self, c, index, objects) --luacheck: no unused args
 				self:get_children_by_id("clienticon")[1].client = c
 			end,
-		},
-		style = {
-			disable_task_name = true,
-			bg_focus = "#353535",
+			id = "background_role",
+			widget = wibox.container.background,
+			style = {
+					shape = gears.shape.rounded_rect,
+			},
 		},
 	})
-
 	-- Create the wibox
 	s.mywibox = awful.wibar({
 		position = "top",
