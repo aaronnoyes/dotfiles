@@ -95,7 +95,7 @@ local tasklist_buttons = gears.table.join(
 awful.screen.connect_for_each_screen(function(s)
 	-- Wallpaper
 	--set_wallpaper(s)
-    gears.wallpaper.set("#666A86")
+	gears.wallpaper.set("#666A86")
 
 	-- Each screen has its own tag table.
 	awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
@@ -119,11 +119,45 @@ awful.screen.connect_for_each_screen(function(s)
 			awful.layout.inc(-1)
 		end)
 	))
-	-- Create a taglist widget
+
+	local function update_taglist(widget, tag, _, _)
+		if tag == s.selected_tag then
+			-- color for currently active tag
+			widget:get_children_by_id("circle_tag")[1].bg = "#e1e1e1"
+		else
+			-- this can also be s.clients if you only want visible client included
+			for _, c in ipairs(s.all_clients) do
+				for _, t in ipairs(c:tags()) do
+					if tag == t then
+						-- color for other tags with at least one client
+						widget:get_children_by_id("circle_tag")[1].bg = "#919191"
+						return
+					end
+				end
+			end
+			-- color for other tags with no clients
+			widget:get_children_by_id("circle_tag")[1].bg = "#303030"
+		end
+	end
+
 	s.mytaglist = awful.widget.taglist({
 		screen = s,
 		filter = awful.widget.taglist.filter.all,
 		buttons = taglist_buttons,
+		layout = wibox.layout.fixed.horizontal,
+		widget_template = {
+			{
+				id = "circle_tag",
+				forced_width = 10,
+				shape = gears.shape.circle,
+				widget = wibox.container.background,
+			},
+			left = 6,
+			right = 6,
+			widget = wibox.container.margin,
+			create_callback = update_taglist,
+			update_callback = update_taglist,
+		},
 	})
 
 	s.mytasklist = awful.widget.tasklist({
@@ -131,23 +165,31 @@ awful.screen.connect_for_each_screen(function(s)
 		filter = awful.widget.tasklist.filter.currenttags,
 		buttons = tasklist_buttons,
 		widget_template = {
-            {
-                {
-                    id     = 'clienticon',
-                    widget = awful.widget.clienticon,
-                },
-                margins = 4,
-                widget  = wibox.container.margin,
-            },
-            id              = 'background_role',
-            widget          = wibox.container.background,
-            create_callback = function(self, c, index, objects) --luacheck: no unused
-                self:get_children_by_id('clienticon')[1].client = c
-            end,
-        },
+			{
+				{
+					id = "clienticon",
+					widget = awful.widget.clienticon,
+				},
+				margins = {
+					top = 2,
+					bottom = 2,
+					left = 4,
+					right = 4,
+				},
+				widget = wibox.container.margin,
+			},
+			id = "background_role",
+			color = "#ff0000",
+			widget = wibox.container.background,
+			shape = gears.shape.rounded_rect,
+			create_callback = function(self, c, index, objects) --luacheck: no unused
+				self:get_children_by_id("clienticon")[1].client = c
+			end,
+		},
 		style = {
-				disable_task_name = true,
-		}
+			disable_task_name = true,
+			bg_focus = "#353535",
+		},
 	})
 
 	-- Create the wibox
@@ -156,36 +198,36 @@ awful.screen.connect_for_each_screen(function(s)
 		screen = s,
 		height = 40,
 		margins = {
-				top = 10,
-				right = 20,
-				bottom = 0,
-				left = 20
-		}
+			top = 10,
+			right = 20,
+			bottom = 0,
+			left = 20,
+		},
 	})
 
 	-- Add widgets to the wibox
 	s.mywibox:setup({
+		{
+			layout = wibox.layout.align.horizontal,
+			expand = "none",
 			{
-				layout = wibox.layout.align.horizontal,
-				expand = "none",
-				{
-					layout = wibox.layout.fixed.horizontal,
-					s.mytasklist,
-					s.mypromptbox,
-				},
-				{ -- Left widgets
-					layout = wibox.layout.fixed.horizontal,
-					--mylauncher,
-					s.mytaglist,
-				},
-				{ -- Right widgets
-					layout = wibox.layout.fixed.horizontal,
-					mybatterybar,
-					wibox.widget.systray(),
-					mytextclock,
-					s.mylayoutbox,
-					spacing = 12
-				},
+				layout = wibox.layout.fixed.horizontal,
+				s.mytasklist,
+				s.mypromptbox,
+			},
+			{ -- Left widgets
+				layout = wibox.layout.fixed.horizontal,
+				--mylauncher,
+				s.mytaglist,
+			},
+			{ -- Right widgets
+				layout = wibox.layout.fixed.horizontal,
+				mybatterybar,
+				wibox.widget.systray(),
+				mytextclock,
+				s.mylayoutbox,
+				spacing = 12,
+			},
 		},
 		widget = wibox.container.margin,
 		margins = 8,
