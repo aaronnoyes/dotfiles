@@ -6,6 +6,8 @@ local naughty = require("naughty")
 
 beautiful.init(gears.filesystem.get_dir("config") .. "/themes/default/theme.lua")
 
+local battery = require("widgets.battery")
+
 local function set_wallpaper(s)
 	-- Wallpaper
 	if beautiful.wallpaper then
@@ -28,38 +30,6 @@ awful.layout.layouts = default_layouts
 -- Create a textclock widget
 mytextclock = awful.widget.textclock(" %a %b %d, %l:%M%P", 15)
 
--- Create a widget and update its content using the output of a shell
--- command every 10 seconds:
-local mybatterybar = wibox.widget({
-	text = "",
-	align = "center",
-	valign = "center",
-	widget = wibox.widget.textbox,
-})
-
-
-mybatterybar:connect_signal("mouse::enter", function(w)
-		awful.spawn.easy_async({ "/home/user/.local/bin/batrem" }, function(out)
-			mybatterybar.text = out
-		end)
-end)
-
-mybatterybar:connect_signal("mouse::leave", function(w)
-		awful.spawn.easy_async({ "/home/user/.local/bin/bat" }, function(out)
-			mybatterybar.text = out
-		end)
-end)
-
-gears.timer({
-	timeout = 10,
-	call_now = true,
-	autostart = true,
-	callback = function()
-		awful.spawn.easy_async({ "/home/user/.local/bin/bat" }, function(out)
-			mybatterybar.text = out
-		end)
-	end,
-})
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -245,7 +215,7 @@ awful.screen.connect_for_each_screen(function(s)
 			},
 			{ -- Right widgets
 				layout = wibox.layout.fixed.horizontal,
-				mybatterybar,
+				battery,
 				wibox.widget.systray(),
 				mytextclock,
 				s.mylayoutbox,
