@@ -31,19 +31,30 @@ mytextclock = awful.widget.textclock(" %a %b %d, %l:%M%P", 15)
 -- Create a widget and update its content using the output of a shell
 -- command every 10 seconds:
 local mybatterybar = wibox.widget({
-	text = "100%",
+	text = "",
 	align = "center",
 	valign = "center",
 	widget = wibox.widget.textbox,
 })
+
+
+mybatterybar:connect_signal("mouse::enter", function(w)
+		awful.spawn.easy_async({ "/home/user/.local/bin/batrem" }, function(out)
+			mybatterybar.text = out
+		end)
+end)
+
+mybatterybar:connect_signal("mouse::leave", function(w)
+		awful.spawn.easy_async({ "/home/user/.local/bin/bat" }, function(out)
+			mybatterybar.text = out
+		end)
+end)
 
 gears.timer({
 	timeout = 10,
 	call_now = true,
 	autostart = true,
 	callback = function()
-		-- You should read it from `/sys/class/power_supply/` (on Linux)
-		-- instead of spawning a shell. This is only an example.
 		awful.spawn.easy_async({ "/home/user/.local/bin/bat" }, function(out)
 			mybatterybar.text = out
 		end)
