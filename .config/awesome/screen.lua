@@ -44,7 +44,7 @@ gears.timer({
 	callback = function()
 		-- You should read it from `/sys/class/power_supply/` (on Linux)
 		-- instead of spawning a shell. This is only an example.
-		awful.spawn.easy_async({ "sh", "-c", "acpi -b | awk -F ',' '{print $2}'" }, function(out)
+		awful.spawn.easy_async({ "/home/user/.local/bin/bat" }, function(out)
 			mybatterybar.text = out
 		end)
 	end,
