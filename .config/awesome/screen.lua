@@ -223,7 +223,9 @@ awful.screen.connect_for_each_screen(function(s)
 			},
 			{ -- Right widgets
 				layout = wibox.layout.fixed.horizontal,
-				volume_widget(),
+				volume_widget {
+						widget_type = "icon"
+				},
 				wifi,
 				battery,
 				wibox.widget.systray(),
