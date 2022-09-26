@@ -163,27 +163,34 @@ awful.screen.connect_for_each_screen(function(s)
 			layout = wibox.layout.fixed.horizontal,
 		},
 		widget_template = {
-			{
 				{
-					id = "clienticon",
-					widget = awful.widget.clienticon,
+					{
+						{
+							id     = 'text',
+							widget = wibox.widget.textbox,
+						},
+						layout = wibox.layout.fixed.horizontal,
+					},
+					left  = 10,
+					right = 10,
+					widget = wibox.container.margin
 				},
-				margins = {
-						top = 2,
-						bottom = 2,
-						left = 2,
-						right = 2 
-				},
-				widget = wibox.container.margin,
-			},
-			create_callback = function(self, c, index, objects) --luacheck: no unused args
-				self:get_children_by_id("clienticon")[1].client = c
-			end,
-			id = "background_role",
-			widget = wibox.container.background,
-			style = {
-					shape = gears.shape.rounded_rect,
-			},
+				id     = 'background_role',
+				widget = wibox.container.background,
+				create_callback = function(self, c, index, objects)
+						if client.focus == c then
+								self:get_children_by_id('text')[1].markup = '<span foreground="black">' .. c.class .. '</span>'
+						else
+								self:get_children_by_id('text')[1].markup = '<span foreground="white">' .. c.class .. '</span>'
+						end
+				end,
+				update_callback = function(self, c, index, objects)
+						if client.focus == c then
+								self:get_children_by_id('text')[1].markup = '<span foreground="black">' .. c.class .. '</span>'
+						else
+								self:get_children_by_id('text')[1].markup = '<span foreground="white">' .. c.class .. '</span>'
+						end
+				end
 		},
 	})
 	-- Create the wibox
