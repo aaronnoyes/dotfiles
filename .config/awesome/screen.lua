@@ -6,7 +6,7 @@ local naughty = require("naughty")
 
 beautiful.init(gears.filesystem.get_dir("config") .. "/themes/default/theme.lua")
 
-local battery = require("widgets.battery")
+-- local battery = require("widgets.battery")
 local wifi = require("widgets.wifi")
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 
