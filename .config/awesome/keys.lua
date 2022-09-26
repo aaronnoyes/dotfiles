@@ -114,13 +114,13 @@ globalkeys = gears.table.join(
 		awful.util.spawn("light -A 5")
 	end),
 	awful.key({}, "XF86AudioLowerVolume", function()
-		awful.util.spawn("pamixer -d 5")
+			volume_widget:dec(5)
 	end),
 	awful.key({}, "XF86AudioRaiseVolume", function()
-		awful.util.spawn("pamixer -i 5")
+			volume_widget:inc(5)
 	end),
 	awful.key({}, "XF86AudioMute", function()
-		awful.util.spawn("pamixer -t")
+			volume_widget:toggle()
 	end),
 	awful.key({modkey, "Shift"}, "f", function()
 			toggle_float()

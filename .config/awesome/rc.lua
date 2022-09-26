@@ -12,6 +12,9 @@ default_layouts = {
 	awful.layout.suit.spiral,
 }
 
+-- global so that we can set keybindings to improve responsiveness
+volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+
 require("awful.autofocus")
 require("errors")
 require("screen")
