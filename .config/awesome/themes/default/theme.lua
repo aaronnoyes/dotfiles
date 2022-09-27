@@ -8,6 +8,8 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
+theme.systray_icon_spacing = 12
+
 theme.tasklist_shape = gears.shape.rounded_rect
 
 theme.font          = "Deja Vu sans 10"

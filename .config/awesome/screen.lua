@@ -232,7 +232,7 @@ awful.screen.connect_for_each_screen(function(s)
 				wibox.widget.systray(),
 				mytextclock,
 				s.mylayoutbox,
-				spacing = 12,
+				spacing = beautiful.get().systray_icon_spacing,
 			},
 		},
 		widget = wibox.container.margin,
