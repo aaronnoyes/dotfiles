@@ -7,7 +7,7 @@ local naughty = require("naughty")
 beautiful.init(gears.filesystem.get_dir("config") .. "/themes/default/theme.lua")
 
 -- local battery = require("widgets.battery")
-local wifi = require("widgets.wifi")
+-- local wifi = require("widgets.wifi")
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 
 local function set_wallpaper(s)
@@ -228,7 +228,6 @@ awful.screen.connect_for_each_screen(function(s)
 						widget_type = "icon"
 				},
 				battery_widget,
-				wifi,
 				wibox.widget.systray(),
 				mytextclock,
 				s.mylayoutbox,

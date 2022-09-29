@@ -24,4 +24,7 @@ require("client")
 
 awesome.spawn("picom")
 awesome.spawn("touchegg")
+awesome.spawn("nm-applet")
 awesome.spawn("/home/user/.local/bin/legion-kb-rgb Static 0,0,0,0,0,0,0,0,0,0,0,0")
+awful.spawn.with_shell("snixembed --fork")
+awful.spawn.with_shell("dropbox")
