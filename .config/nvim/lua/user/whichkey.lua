@@ -95,6 +95,11 @@ local mappings = {
     f = {"<cmd>lua require('telescope.builtin').find_files()<cr>", "find_files"},
     g = {"<cmd>lua require('telescope.builtin').live_grep()<cr>", "live_grep"},
     b = {"<cmd>lua require('telescope.builtin').buffers()<cr>", "buffers"},
+  },
+  l = {
+    name = "LSP",
+    i = {vim.lsp.buf.hover, "Info"},
+    d = {function() vim.diagnostic.goto_next({float = {border = "rounded"}}) end, "Diagnostics"}
   }
 }
 

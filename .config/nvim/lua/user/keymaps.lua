@@ -20,5 +20,3 @@ keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 keymap("i", "jk", "<ESC>", opts)
-
-keymap("n", "K", vim.lsp.buf.hover, opts)
