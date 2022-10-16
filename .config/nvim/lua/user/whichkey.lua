@@ -99,7 +99,7 @@ local mappings = {
   l = {
     name = "LSP",
     i = {vim.lsp.buf.hover, "Info"},
-    d = {function() vim.diagnostic.goto_next({float = {border = "rounded"}}) end, "Diagnostics"}
+    d = {function() vim.diagnostic.open_float({border = "rounded"}) end, "Diagnostics"}
   }
 }
 
