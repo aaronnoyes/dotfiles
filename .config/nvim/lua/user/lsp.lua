@@ -16,6 +16,16 @@ local has_words_before = function()
 end
 
 cmp.setup({
+    window = {
+		completion = {
+		    border = 'rounded',
+			scrollbar = '||',
+	    },
+		documentation = {
+		    border = 'rounded',
+			scrollbar = '||',
+	    },
+	},
 	snippet = {
 		-- REQUIRED - you must specify a snippet engine
 		expand = function(args)
