@@ -18,7 +18,11 @@ require("nvim-tree").setup{
 				--   },
 				-- }
         },
-		
+		actions = {
+            open_file = {
+                quit_on_open = true,
+            },
+        },
 }
 -- nvim-tree is also there in modified buffers so this function filter it out
 local modifiedBufs = function(bufs)
