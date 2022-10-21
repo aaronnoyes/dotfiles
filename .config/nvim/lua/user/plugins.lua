@@ -43,4 +43,5 @@ return require("packer").startup(function(use)
 		tag = "0.1.0",
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
+	use {"ellisonleao/glow.nvim"}
 end)
