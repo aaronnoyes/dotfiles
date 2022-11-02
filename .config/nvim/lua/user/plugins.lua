@@ -35,12 +35,9 @@ return require("packer").startup(function(use)
 	})
 	use("numToStr/Comment.nvim")
 	use("nvim-lua/plenary.nvim")
-	-- using packer.nvim
-	use("nmac427/guess-indent.nvim")
 	use({
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.0",
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
-	use {"ellisonleao/glow.nvim"}
 end)
