@@ -1,5 +1,12 @@
-require("bufferline").setup{
+require("bufferline").setup {
 	options = {
-		offsets = { { filetype = "NvimTree", text = "", padding = 0 } }
+        offsets = {
+            {
+                filetype = "NvimTree",
+                text = "",
+                highlight = "Directory",
+                padding = 1
+            }
+        }
 	}
 }
