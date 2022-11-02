@@ -3,6 +3,8 @@ local options = {
 	cursorline = true,
 	termguicolors = true,
 	tabstop = 4,
+	shiftwidth = 4,
+	expandtab = true,
 	signcolumn = "yes"
 }
 
