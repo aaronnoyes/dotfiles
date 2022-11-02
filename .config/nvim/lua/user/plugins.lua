@@ -34,7 +34,6 @@ return require("packer").startup(function(use)
 		requires = { "kyazdani42/nvim-web-devicons", opt = true },
 	})
 	use("numToStr/Comment.nvim")
-	use("jose-elias-alvarez/null-ls.nvim")
 	use("nvim-lua/plenary.nvim")
 	-- using packer.nvim
 	use("nmac427/guess-indent.nvim")

@@ -89,7 +89,6 @@ local mappings = {
     u = { "<cmd>PackerUpdate<cr>", "Update" },
   },
   ["m"] = {"<cmd>Mason<CR>", "Mason"},
-  ["n"] = {"<cmd>lua vim.lsp.buf.formatting()<CR>", "null-ls"},
   ["h"] = {"<cmd>noh<CR>", "Clear highlight"},
   t = {
     name = "Telescope",
