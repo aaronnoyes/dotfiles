@@ -2,12 +2,13 @@ local options = {
 	number = true,
 	cursorline = true,
 	termguicolors = true,
-	tabstop = 4,
-	--shiftwidth = 4,
-	--expandtab = true,
+	tabstop = 2,
+	shiftwidth = 2,
+	expandtab = true,
 	signcolumn = "yes",
     autoindent = true,
-    smartindent = false
+    smartindent = false,
+	indentexpr = "",
 }
 
 for k, v in pairs(options) do
@@ -22,3 +23,5 @@ vim.cmd([[
 		  augroup END
   endif
 ]])
+
+vim.cmd([[filetype indent off]])
