@@ -5,7 +5,9 @@ local options = {
 	tabstop = 4,
 	shiftwidth = 4,
 	expandtab = true,
-	signcolumn = "yes"
+	signcolumn = "yes",
+    autoindent = true,
+    smartindent = false
 }
 
 for k, v in pairs(options) do
