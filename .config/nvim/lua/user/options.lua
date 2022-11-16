@@ -7,7 +7,7 @@ local options = {
 	expandtab = true,
 	signcolumn = "yes",
     autoindent = true,
-    smartindent = false,
+    smartindent = true,
 	indentexpr = "",
 }
 
@@ -24,4 +24,4 @@ vim.cmd([[
   endif
 ]])
 
-vim.cmd([[filetype indent off]])
+--vim.cmd([[filetype indent off]])
