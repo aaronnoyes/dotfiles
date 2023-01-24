@@ -48,11 +48,7 @@ return require("packer").startup(function(use)
 	})
 	use("numToStr/Comment.nvim")
 	use("nvim-lua/plenary.nvim")
-	use({
-		"nvim-telescope/telescope.nvim",
-		tag = "0.1.0",
-		requires = { { "nvim-lua/plenary.nvim" } },
-	})
+  use {'glepnir/dashboard-nvim'}
 	if packer_bootstrap then
 		require('packer').sync()
 	end
