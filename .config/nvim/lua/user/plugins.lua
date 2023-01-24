@@ -50,6 +50,10 @@ return require("packer").startup(function(use)
 	use("nvim-lua/plenary.nvim")
     use("lewis6991/gitsigns.nvim")
     use("lukas-reineke/indent-blankline.nvim")
+    use {
+        "windwp/nvim-autopairs",
+        config = function() require("nvim-autopairs").setup {} end
+    }
 	if packer_bootstrap then
 		require('packer').sync()
 	end
