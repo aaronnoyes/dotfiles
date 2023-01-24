@@ -8,7 +8,7 @@ local options = {
 	signcolumn = "yes",
     autoindent = true,
     smartindent = true,
-	indentexpr = "",
+	-- indentexpr = "",
 }
 
 for k, v in pairs(options) do
