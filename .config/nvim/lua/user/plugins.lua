@@ -48,7 +48,8 @@ return require("packer").startup(function(use)
 	})
 	use("numToStr/Comment.nvim")
 	use("nvim-lua/plenary.nvim")
-  use("lewis6991/gitsigns.nvim")
+    use("lewis6991/gitsigns.nvim")
+    use("lukas-reineke/indent-blankline.nvim")
 	if packer_bootstrap then
 		require('packer').sync()
 	end
