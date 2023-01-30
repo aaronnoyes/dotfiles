@@ -71,6 +71,7 @@ return require("packer").startup(function(use)
     end
   }
   use { "nvim-telescope/telescope-file-browser.nvim" }
+  use("nvim-telescope/telescope-project.nvim")
 	if packer_bootstrap then
 		require('packer').sync()
 	end
