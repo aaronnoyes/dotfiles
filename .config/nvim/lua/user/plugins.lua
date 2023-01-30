@@ -66,9 +66,6 @@ return require("packer").startup(function(use)
   use ("windwp/nvim-ts-autotag")
   use {
     'goolord/alpha-nvim',
-    config = function ()
-      require'alpha'.setup(require'alpha.themes.dashboard'.config)
-    end
   }
   use { "nvim-telescope/telescope-file-browser.nvim" }
   use("nvim-telescope/telescope-project.nvim")
