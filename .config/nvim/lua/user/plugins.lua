@@ -64,6 +64,13 @@ return require("packer").startup(function(use)
   }
   use ("rafamadriz/friendly-snippets")
   use ("windwp/nvim-ts-autotag")
+  use {
+    'goolord/alpha-nvim',
+    config = function ()
+      require'alpha'.setup(require'alpha.themes.dashboard'.config)
+    end
+  }
+  use { "nvim-telescope/telescope-file-browser.nvim" }
 	if packer_bootstrap then
 		require('packer').sync()
 	end
