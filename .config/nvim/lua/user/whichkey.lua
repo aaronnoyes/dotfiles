@@ -76,7 +76,7 @@ local opts = {
 }
 
 local mappings = {
-  ["e"] = { "<cmd>Telescope file_browser<cr>", "Explorer" },
+  ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   ["w"] = { "<cmd>w!<CR>", "Save" },
   ["q"] = { "<cmd>q!<CR>", "Quit" },
   ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
@@ -96,6 +96,7 @@ local mappings = {
     g = {"<cmd>lua require('telescope.builtin').live_grep()<cr>", "live_grep"},
     b = {"<cmd>lua require('telescope.builtin').buffers()<cr>", "buffers"},
     p = {"<cmd>Telescope project<cr>", "projects"},
+    e = {"<cmd>Telescope file_browser<cr>", "projects"},
   },
   l = {
     name = "LSP",
