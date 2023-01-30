@@ -38,7 +38,11 @@ return require("packer").startup(function(use)
 	use("hrsh7th/cmp-path")
 	use("hrsh7th/cmp-cmdline")
 	use("hrsh7th/nvim-cmp")
-	use("L3MON4D3/LuaSnip")
+  use({
+    "L3MON4D3/LuaSnip",
+    tag = "v<CurrentMajor>.*",
+    run = "make install_jsregexp"
+  })
 	use("saadparwaiz1/cmp_luasnip")
 	use("arzg/vim-substrata")
 	use("aktersnurra/no-clown-fiesta.nvim")
@@ -48,12 +52,16 @@ return require("packer").startup(function(use)
 	})
 	use("numToStr/Comment.nvim")
 	use("nvim-lua/plenary.nvim")
-    use("lewis6991/gitsigns.nvim")
-    use("lukas-reineke/indent-blankline.nvim")
-    use {
-        "windwp/nvim-autopairs",
-        config = function() require("nvim-autopairs").setup {} end
-    }
+  use("lewis6991/gitsigns.nvim")
+  use("lukas-reineke/indent-blankline.nvim")
+  use {
+      "windwp/nvim-autopairs",
+      config = function() require("nvim-autopairs").setup {} end
+  }
+  use {
+    'nvim-telescope/telescope.nvim', tag = '0.1.1',
+    requires = { {'nvim-lua/plenary.nvim'} }
+  }
 	if packer_bootstrap then
 		require('packer').sync()
 	end

@@ -26,12 +26,15 @@ cmp.setup({
 			scrollbar = '||',
 	    },
 	},
-	snippet = {
-		-- REQUIRED - you must specify a snippet engine
-		expand = function(args)
-			require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-		end,
-	},
+    snippet = {
+        expand = function(args)
+            local luasnip = prequire("luasnip")
+            if not luasnip then
+                return
+            end
+            luasnip.lsp_expand(args.body)
+        end,
+    },
 	mapping = cmp.mapping.preset.insert({
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
@@ -39,7 +42,7 @@ cmp.setup({
 			elseif luasnip.expand_or_jumpable() then
 				luasnip.expand_or_jump()
 			elseif has_words_before() then
-				--cmp.complete()
+				-- cmp.complete()
 				fallback()
 			else
 				fallback()
