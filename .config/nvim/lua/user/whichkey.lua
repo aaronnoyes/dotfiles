@@ -105,6 +105,13 @@ local mappings = {
     d = {function() vim.diagnostic.open_float({border = "rounded"}) end, "Diagnostics"}
   },
   ["g"] = {"<cmd>Glow<cr>", "Glow"},
+  s = {
+    name = "Session Manager",
+    s = {"<cmd>SessionManager save_current_session<cr>", "save session"},
+    l = {"<cmd>SessionManager load_session<cr>", "load session"},
+    L = {"<cmd>SessionManager load_last_session<cr>", "load last session"},
+    d = {"<cmd>SessionManager delete_session<cr>", "delete session"},
+  }
 }
 
 which_key.setup(setup)
