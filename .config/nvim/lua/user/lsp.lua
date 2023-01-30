@@ -9,6 +9,7 @@ require("mason-lspconfig").setup()
 local lsp = require("lspconfig")
 local cmp = require("cmp")
 local luasnip = require("luasnip")
+require('luasnip.loaders.from_vscode').lazy_load()
 
 local has_words_before = function()
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -17,45 +18,44 @@ end
 
 cmp.setup({
     window = {
-		completion = {
-		    border = 'rounded',
-			scrollbar = '||',
-	    },
-		documentation = {
-		    border = 'rounded',
-			scrollbar = '||',
-	    },
-	},
+      completion = {
+          border = 'rounded',
+        scrollbar = '||',
+        },
+      documentation = {
+          border = 'rounded',
+        scrollbar = '||',
+        },
+    },
     snippet = {
         expand = function(args)
-            local luasnip = prequire("luasnip")
-            if not luasnip then
-                return
-            end
+            local luasnip = require("luasnip")
             luasnip.lsp_expand(args.body)
         end,
     },
-	mapping = cmp.mapping.preset.insert({
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			elseif has_words_before() then
-				-- cmp.complete()
-				fallback()
-			else
-				fallback()
-			end
-		end, {"i", "s"}),
-		['<CR>'] = cmp.mapping.confirm({select = true}),
-	}),
-	sources = cmp.config.sources({
-		{ name = 'nvim_lsp' },
-		{ name = 'luasnip' }, -- For luasnip users.
-	}, {
-		{ name = 'buffer' },
-	})
+    mapping = cmp.mapping.preset.insert({
+      ["<Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif luasnip.expandable() then
+          luasnip.expand()
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        elseif has_words_before() then
+          -- cmp.complete()
+          fallback()
+        else
+          fallback()
+        end
+      end, {"i", "s"}),
+      ['<CR>'] = cmp.mapping.confirm({select = true}),
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' }, -- For luasnip users.
+    }, {
+      { name = 'buffer' },
+    })
 })
 
 cmp.setup.cmdline('/', {
