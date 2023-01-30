@@ -63,6 +63,7 @@ return require("packer").startup(function(use)
     requires = { {'nvim-lua/plenary.nvim'} }
   }
   use ("rafamadriz/friendly-snippets")
+  use ("windwp/nvim-ts-autotag")
 	if packer_bootstrap then
 		require('packer').sync()
 	end
