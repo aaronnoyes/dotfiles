@@ -73,6 +73,15 @@ return require("packer").startup(function(use)
   use {"akinsho/toggleterm.nvim", tag = '*', config = function()
     require("toggleterm").setup()
   end}
+  use {
+    'jinh0/eyeliner.nvim',
+    config = function()
+      require'eyeliner'.setup {
+        highlight_on_key = true, -- show highlights only after keypress
+        dim = false              -- dim all other characters if set to true (recommended!)
+      }
+    end
+  }
 	if packer_bootstrap then
 		require('packer').sync()
 	end
