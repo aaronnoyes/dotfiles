@@ -70,6 +70,9 @@ return require("packer").startup(function(use)
   use { "nvim-telescope/telescope-file-browser.nvim" }
   use("nvim-telescope/telescope-project.nvim")
   use("Shatur/neovim-session-manager")
+  use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+    require("toggleterm").setup()
+  end}
 	if packer_bootstrap then
 		require('packer').sync()
 	end

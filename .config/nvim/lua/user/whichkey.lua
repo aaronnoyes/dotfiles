@@ -1,5 +1,18 @@
 local which_key = require("which-key")
 
+local Terminal  = require('toggleterm.terminal').Terminal
+local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, direction="float" })
+local term = Terminal:new({ hidden = true, direction="float" })
+
+function _lazygit_toggle()
+  lazygit:toggle()
+end
+
+function _term_toggle()
+  term:toggle()
+end
+
+
 local setup = {
   plugins = {
     marks = true, -- shows a list of your marks on ' and `
@@ -104,7 +117,9 @@ local mappings = {
     I = {vim.lsp.buf.definition, "Go to definition"},
     d = {function() vim.diagnostic.open_float({border = "rounded"}) end, "Diagnostics"}
   },
-  ["g"] = {"<cmd>Glow<cr>", "Glow"},
+  ["G"] = {"<cmd>Glow<cr>", "Glow"},
+  ["g"] = {"<cmd>lua _lazygit_toggle()<CR>", "lazygit"},
+  ["T"] = {"<cmd>lua _term_toggle()<CR>", "terminal"},
   s = {
     name = "Session Manager",
     s = {"<cmd>SessionManager save_current_session<cr>", "save session"},
