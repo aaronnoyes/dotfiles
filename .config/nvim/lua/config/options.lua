@@ -6,3 +6,4 @@ local opt = vim.opt
 
 opt.wrap = true
 opt.relativenumber = false
+opt.clipboard = ""
