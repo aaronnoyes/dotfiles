@@ -17,3 +17,4 @@ end
 
 map("i", "jk", "<ESC>", opts)
 map("n", "<leader>y", '"*y', opts)
+map("v", "<leader>y", '"*y', opts)
