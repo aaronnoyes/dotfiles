@@ -17,6 +17,7 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono")
+(setq treesit-font-lock-level 4)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -126,16 +127,26 @@
 (use-package hydra
   :ensure t)
 
-(defhydra hydra-cycle-buffers (global-map "C-x C-x")
-  "cycle buffers"
-  ("n" next-buffer "next")
-  ("p" previous-buffer "previous")
-  ("f" nil "finished" :exit t))
+(defhydra hydra-manage-windows (:color red)
+  "manage windows"
+  ("s" shrink-window-horizontally "shrink horizontally" :column "Sizing")
+    ("e" enlarge-window-horizontally "enlarge horizontally")
+    ("b" balance-windows "balance window height")
+    ("m" maximize-window "maximize current window")
+    ("M" minimize-window "minimize current window")
+    
+    ("H" split-window-below "split horizontally" :column "Split management")
+    ("v" split-window-right "split vertically")
+    ("d" delete-window "delete current window")
+    ("x" delete-other-windows "delete-other-windows")
 
-(defhydra hydra-cycle-windows (global-map "C-x C-o")
-  "cycle windows"
-  ("o" other-window "next")
-  ("f" nil "finished" :exit t))
+    ("h" windmove-left "← window" :color blue :column "Navigation")
+    ("j" windmove-down "↓ window")
+    ("k" windmove-up "↑ window")
+    ("l" windmove-right "→ window")
+    ("q" nil "quit menu" :color blue :column nil))
+
+(global-set-key (kbd "C-c C-j") 'hydra-manage-windows/body)
 
 (use-package ripgrep
   :ensure t)
@@ -186,9 +197,15 @@
   :bind
   ("C-x C-b" . persp-counsel-switch-buffer)         ; or use a nicer switcher, see below
   :custom
-  (persp-mode-prefix-key (kbd "C-c M-p"))  ; pick your own prefix key here
+  (persp-mode-prefix-key (kbd "C-c C-p"))  ; pick your own prefix key here
   :init
   (persp-mode))
 
 (use-package vterm
   :ensure t)
+
+(setq major-mode-remap-alist
+ '((js-mode . js-ts-mode)
+   (typescript-mode . typescript-ts-mode)
+   (json-mode . json-ts-mode)
+   (css-mode . css-ts-mode)))
