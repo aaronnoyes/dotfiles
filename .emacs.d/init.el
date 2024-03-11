@@ -112,7 +112,6 @@
 
 (use-package dashboard
   :ensure t
-  ;:bind (("C-x d" . dashboard-open))
   :init
   (setq dashboard-items '((recents   . 5)
                         (projects  . 20)))
@@ -224,13 +223,12 @@
 
 (global-set-key (kbd "C-c C-v") 'open-new-vterm)
 
-
 (setq major-mode-remap-alist
  '((js-mode . js-ts-mode)
    (typescript-mode . typescript-ts-mode)
    (json-mode . json-ts-mode)
    (css-mode . css-ts-mode)
-   (java-mode . java-ts-mode))
+   (java-mode . java-ts-mode)))
 
 (use-package yasnippet
   :ensure t
