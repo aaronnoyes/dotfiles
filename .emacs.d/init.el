@@ -12,6 +12,17 @@
 
 (setq custom-file "~/.emacs.d/custom-set-vars.el")
 
+(let ((auto-save-dir (concat user-emacs-directory "auto-save/")))
+  (unless (file-exists-p auto-save-dir)
+    (make-directory auto-save-dir t))
+  (setq auto-save-file-name-transforms `((".*" ,auto-save-dir t))))
+
+(let ((backup-dir (expand-file-name (concat user-emacs-directory "backups/"))))
+  (unless (file-exists-p backup-dir)
+    (make-directory backup-dir t))
+  (setq backup-directory-alist `(("." . ,backup-dir))))
+
+
 (global-display-line-numbers-mode t)
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -152,12 +163,18 @@
   :ensure t)
 
 (use-package magit
-  :ensure t)
+  :ensure t
+  :bind (("C-x g" . magit-status)
+         ("C-x C-g" . magit-status)))
 
 (use-package lsp-mode
   :ensure t
   :commands (lsp lsp-deferred)
-  :hook ((js-mode) . lsp)
+  :hook (
+         (js-mode . lsp)
+	 (typescript-mode . lsp)
+	 (java-mode . lsp)
+         (lsp-mode . lsp-enable-which-key-integration))
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
@@ -199,11 +216,21 @@
 (use-package vterm
   :ensure t)
 
+(defun open-new-vterm ()
+  "open a new vterm instance"
+  (interactive)
+  (let ((buffer (generate-new-buffer-name "*vterm*")))
+    (vterm buffer)))
+
+(global-set-key (kbd "C-c C-v") 'open-new-vterm)
+
+
 (setq major-mode-remap-alist
  '((js-mode . js-ts-mode)
    (typescript-mode . typescript-ts-mode)
    (json-mode . json-ts-mode)
-   (css-mode . css-ts-mode)))
+   (css-mode . css-ts-mode)
+   (java-mode . java-ts-mode))
 
 (use-package yasnippet
   :ensure t
@@ -214,3 +241,8 @@
 
 (use-package yasnippet-snippets
   :ensure t)
+
+(use-package flycheck
+  :ensure t
+  :config
+  (add-hook 'after-init-hook #'global-flycheck-mode))
