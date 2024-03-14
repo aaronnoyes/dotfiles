@@ -224,7 +224,7 @@
 (global-set-key (kbd "C-c C-v") 'open-new-vterm)
 
 (setq major-mode-remap-alist
- '((js-mode . js-ts-mode)
+ '((javascript-mode . js-ts-mode)
    (typescript-mode . typescript-ts-mode)
    (json-mode . json-ts-mode)
    (css-mode . css-ts-mode)
