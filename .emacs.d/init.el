@@ -196,13 +196,6 @@
   :ensure t
   :hook (company-mode . company-box-mode))
 
-(use-package typescript-mode
-  :ensure t
-  :mode "\\.ts\\'"
-  :hook (typescript-mode lsp-deffered)
-  :config
-  (setq typescript-indent-level 2))
-
 (use-package perspective
   :ensure t
   :bind
@@ -225,7 +218,7 @@
 
 (setq major-mode-remap-alist
  '((javascript-mode . js-ts-mode)
-   (typescript-mode . typescript-ts-mode)
+   (typescript-mode . js-ts-mode)
    (json-mode . json-ts-mode)
    (css-mode . css-ts-mode)
    (java-mode . java-ts-mode)))
