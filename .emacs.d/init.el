@@ -25,10 +25,10 @@
 
 (global-display-line-numbers-mode t)
 
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
-(set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono")
 (setq treesit-font-lock-level 4)
+
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(define-key global-map (kbd "C-c q") 'delete-window)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -79,16 +79,8 @@
          ("C-k" . ivy-previous-line)
          ("C-d" . ivy-reverse-i-search-kill))
   :config
+  (setq ivy-initial-inputs-alist nil)
   (ivy-mode 1))
-
-(use-package nerd-icons
-  :custom
-  (nerd-icons-font-family "Symbols Nerd Font Mono"))
-
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1)
-  :config (setq doom-modeline-height 25))
 
 (use-package which-key
   :ensure t
@@ -97,15 +89,26 @@
   :config
   (setq which-key-idle-delay 1))
 
+(defun my/projectile-project-root ()
+  "Identify the project root for npm projects and fall back to default methods."
+  (or
+   ;; First, check for package.json in the current directory and upwards.
+   (projectile-locate-dominating-file default-directory "package.json")
+   ;; If not found, fall back to Projectile's default project root detection.
+   (projectile-project-root)))
+
 (use-package projectile
   :ensure t
   :init
   (projectile-mode +1)
+					;(setq projectile-project-root-function 'my/projectile-project-root)
+  :config
+  (projectile-register-project-type 'npm '("package.json")
+                                  :project-file "package.json")
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map)))
 
-(projectile-register-project-type 'npm '("package.json")
-                                  :project-file "package.json")
+
 
 (use-package counsel-projectile
   :ensure t)
@@ -187,6 +190,8 @@
 
 (use-package company
   :ensure t
+  :bind
+  ("C-c C-c" . company-complete)
   :hook (prog-mode . company-mode)
   :custom
   (company-idle-delay nil))
