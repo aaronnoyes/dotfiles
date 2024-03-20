@@ -29,6 +29,10 @@
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (define-key global-map (kbd "C-c q") 'delete-window)
+(define-key global-map (kbd "C-c h") 'split-window-right)
+(define-key global-map (kbd "C-c v") 'split-window-below)
+(define-key global-map (kbd "C-c o") 'other-window)
+(define-key global-map (kbd "C-c d") 'delete-other-windows)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
