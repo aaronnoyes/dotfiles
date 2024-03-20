@@ -171,6 +171,9 @@
   :bind (("C-x g" . magit-status)
          ("C-x C-g" . magit-status)))
 
+(use-package lsp-java
+  :ensure t)
+
 (use-package lsp-mode
   :ensure t
   :commands (lsp lsp-deferred)
