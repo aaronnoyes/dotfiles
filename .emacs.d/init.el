@@ -110,10 +110,10 @@
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map)))
 
-
-
 (use-package counsel-projectile
-  :ensure t)
+  :ensure t
+  :bind (:map projectile-command-map
+	      ("s r" . counsel-projectile-rg)))
 
 (use-package dashboard
   :ensure t
