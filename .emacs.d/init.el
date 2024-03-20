@@ -27,12 +27,21 @@
 
 (setq treesit-font-lock-level 4)
 
+;;custom functions
+(defun open-new-vterm ()
+  "open a new vterm instance"
+  (interactive)
+  (let ((buffer (generate-new-buffer-name "*vterm*")))
+    (vterm buffer)))
+
+;;keybinds
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (define-key global-map (kbd "C-c q") 'delete-window)
 (define-key global-map (kbd "C-c h") 'split-window-right)
 (define-key global-map (kbd "C-c v") 'split-window-below)
 (define-key global-map (kbd "C-c o") 'other-window)
 (define-key global-map (kbd "C-c d") 'delete-other-windows)
+(define-key global-map (kbd "C-c v") 'open-new-vterm)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -93,22 +102,11 @@
   :config
   (setq which-key-idle-delay 1))
 
-(defun my/projectile-project-root ()
-  "Identify the project root for npm projects and fall back to default methods."
-  (or
-   ;; First, check for package.json in the current directory and upwards.
-   (projectile-locate-dominating-file default-directory "package.json")
-   ;; If not found, fall back to Projectile's default project root detection.
-   (projectile-project-root)))
 
 (use-package projectile
   :ensure t
   :init
   (projectile-mode +1)
-					;(setq projectile-project-root-function 'my/projectile-project-root)
-  :config
-  (projectile-register-project-type 'npm '("package.json")
-                                  :project-file "package.json")
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map)))
 
@@ -215,12 +213,6 @@
 
 (use-package vterm
   :ensure t)
-
-(defun open-new-vterm ()
-  "open a new vterm instance"
-  (interactive)
-  (let ((buffer (generate-new-buffer-name "*vterm*")))
-    (vterm buffer)))
 
 (global-set-key (kbd "C-c C-v") 'open-new-vterm)
 
