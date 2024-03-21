@@ -247,3 +247,20 @@
   (corfu-cycle t)
   :init
   (global-corfu-mode))
+
+(use-package cape
+  :ensure t
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file))
+
+(use-package yasnippet-capf
+  :ensure t
+  :after cape
+  :bind
+  ("C-c y" . yasnippet-capf)
+  :config
+  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
+
+
+
