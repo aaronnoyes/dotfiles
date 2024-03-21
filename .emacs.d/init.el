@@ -123,7 +123,13 @@
   :init
   (projectile-mode +1)
   :bind (:map projectile-mode-map
-              ("C-c p" . projectile-command-map)))
+              ("C-c p" . projectile-command-map))
+  :custom (projectile-project-root-functions
+  '(projectile-root-local
+    projectile-root-marked
+    projectile-root-top-down
+    projectile-root-bottom-up
+    projectile-root-top-down-recurring)))
 
 (use-package counsel-projectile
   :ensure t
