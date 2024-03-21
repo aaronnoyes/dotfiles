@@ -80,36 +80,6 @@
   :init (doom-modeline-mode 1)
   :config (setq doom-modeline-height 25))
 
-(use-package swiper
-  :ensure t)
-
-(use-package counsel
-  :ensure t
-  :bind (("M-x" . counsel-M-x)
-         ("C-x C-f" . counsel-find-file)
-         :map minibuffer-local-map
-         ("C-r" . 'counsel-minibuffer-history)))
-
-(use-package ivy
-  :ensure t
-  :diminish
-  :bind (("C-s" . swiper)
-         :map ivy-minibuffer-map
-         ("TAB" . ivy-alt-done)	
-         ("C-l" . ivy-alt-done)
-         ("C-j" . ivy-next-line)
-         ("C-k" . ivy-previous-line)
-         :map ivy-switch-buffer-map
-         ("C-k" . ivy-previous-line)
-         ("C-l" . ivy-done)
-         ("C-d" . ivy-switch-buffer-kill)
-         :map ivy-reverse-i-search-map
-         ("C-k" . ivy-previous-line)
-         ("C-d" . ivy-reverse-i-search-kill))
-  :config
-  (setq ivy-initial-inputs-alist nil)
-  (ivy-mode 1))
-
 (use-package which-key
   :ensure t
   :init (which-key-mode)
@@ -131,11 +101,6 @@
     projectile-root-bottom-up
     projectile-root-top-down-recurring)))
 
-(use-package counsel-projectile
-  :ensure t
-  :bind (:map projectile-command-map
-	      ("s r" . counsel-projectile-rg)))
-
 (use-package dashboard
   :ensure t
   :init
@@ -143,22 +108,6 @@
                         (projects  . 20)))
   :config
   (dashboard-setup-startup-hook))
-
-(use-package ivy-rich
-  :ensure t
-  :init
-  (ivy-rich-mode 1))
-
-(use-package helpful
-  :ensure t
-  :custom
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable)
-  :bind
-  ([remap describe-function] . counsel-describe-function)
-  ([remap describe-command] . helpful-command)
-  ([remap describe-variable] . counsel-describe-variable)
-  ([remap describe-key] . helpful-key))
 
 (use-package hydra
   :ensure t)
@@ -213,30 +162,18 @@
   :custom
   (lsp-ui-doc-position 'at-point))
 
-(use-package company
-  :ensure t
-  :bind
-  ("C-c C-c" . company-complete)
-  :hook (prog-mode . company-mode)
-  :custom
-  (company-idle-delay nil))
-
-(use-package company-box
-  :ensure t
-  :hook (company-mode . company-box-mode))
-
-(use-package perspective
-  :ensure t
-  :bind
-  ("C-x C-b" . persp-counsel-switch-buffer)
-  :custom
-  (persp-mode-prefix-key (kbd "C-c b"))
-  :init
-  (setq persp-state-default-file (expand-file-name ".perspective" user-emacs-directory))
-  (add-hook 'kill-emacs-hook #'persp-state-save)
-  (if (file-exists-p persp-state-default-file)
-    (persp-state-load persp-state-default-file))
-  (persp-mode))
+;; (use-package perspective
+;;   :ensure t
+;;   :bind
+;;   ("C-x C-b" . persp-counsel-switch-buffer)
+;;   :custom
+;;   (persp-mode-prefix-key (kbd "C-c b"))
+;;   :init
+;;   (setq persp-state-default-file (expand-file-name ".perspective" user-emacs-directory))
+;;   (add-hook 'kill-emacs-hook #'persp-state-save)
+;;   (if (file-exists-p persp-state-default-file)
+;;     (persp-state-load persp-state-default-file))
+;;   (persp-mode))
 
 (use-package vterm
   :ensure t)
@@ -252,7 +189,6 @@
 
 (use-package yasnippet
   :ensure t
-  :bind ("C-c y" . company-yasnippet)
   :hook (prog-mode . yas-minor-mode)
   :config
   (yas-reload-all))
@@ -264,3 +200,50 @@
   :ensure t
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
+
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode))
+
+;; persist history over emacs restarts
+;; vertico sorts by history position
+(use-package savehist
+  :ensure t
+  :init
+  (savehist-mode))
+
+;; better directory navigation
+(use-package vertico-directory
+  :after vertico
+  :ensure nil
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word))
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode))
+
+(use-package consult
+  :ensure t
+  :bind
+  ("C-c s" . consult-line)
+  ("C-c b" . consult-buffer)
+  ("C-c :" . consult-goto-line))
+
+(use-package corfu
+  :ensure t
+  :custom
+  (corfu-cycle t)
+  :init
+  (global-corfu-mode))
