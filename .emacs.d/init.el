@@ -25,6 +25,7 @@
 
 (global-display-line-numbers-mode t)
 
+(set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono")
 (setq treesit-font-lock-level 4)
 
 ;;custom functions
@@ -37,15 +38,20 @@
 ;;keybinds
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (define-key global-map (kbd "C-c q") 'delete-window)
-(define-key global-map (kbd "C-c h") 'split-window-right)
-(define-key global-map (kbd "C-c v") 'split-window-below)
+(define-key global-map (kbd "C-c v") 'split-window-right)
+(define-key global-map (kbd "C-c h") 'split-window-below)
 (define-key global-map (kbd "C-c o") 'other-window)
 (define-key global-map (kbd "C-c d") 'delete-other-windows)
-(define-key global-map (kbd "C-c v") 'open-new-vterm)
+(define-key global-map (kbd "C-c t") 'open-new-vterm)
+(define-key global-map (kbd "C-c /") 'comment-line)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
+
+(use-package all-the-icons
+  :ensure t
+  :if (display-graphic-p))
 
 (use-package doom-themes
   :ensure t
@@ -64,6 +70,15 @@
   (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
+
+(use-package nerd-icons
+  :custom
+  (nerd-icons-font-family "Symbols Nerd Font Mono"))
+
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :config (setq doom-modeline-height 25))
 
 (use-package swiper
   :ensure t)
