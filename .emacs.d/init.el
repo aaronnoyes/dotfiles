@@ -189,8 +189,7 @@
 
 (use-package magit
   :ensure t
-  :bind (("C-x g" . magit-status)
-         ("C-x C-g" . magit-status)))
+  :bind (("C-c g" . magit-status)))
 
 (use-package lsp-java
   :ensure t)
@@ -229,10 +228,14 @@
 (use-package perspective
   :ensure t
   :bind
-  ("C-x C-b" . persp-counsel-switch-buffer)         ; or use a nicer switcher, see below
+  ("C-x C-b" . persp-counsel-switch-buffer)
   :custom
-  (persp-mode-prefix-key (kbd "C-c C-p"))  ; pick your own prefix key here
+  (persp-mode-prefix-key (kbd "C-c b"))
   :init
+  (setq persp-state-default-file (expand-file-name ".perspective" user-emacs-directory))
+  (add-hook 'kill-emacs-hook #'persp-state-save)
+  (if (file-exists-p persp-state-default-file)
+    (persp-state-load persp-state-default-file))
   (persp-mode))
 
 (use-package vterm
