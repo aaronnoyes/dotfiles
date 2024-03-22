@@ -236,9 +236,10 @@
 
 (use-package consult
   :ensure t
+  :after (perspective)
   :bind
   ("C-s" . consult-line)
-  ("C-c C-b" . consult-buffer)
+  ("C-c s" . consult-buffer)
   ("C-c :" . consult-goto-line)
   :config
   (consult-customize consult--source-buffer :hidden t :default nil)
@@ -269,3 +270,5 @@
 (use-package rainbow-delimiters
   :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
+
+
