@@ -94,12 +94,14 @@
   (projectile-mode +1)
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map))
-  :custom (projectile-project-root-functions
+  :custom
+  (projectile-project-root-functions
   '(projectile-root-local
     projectile-root-marked
     projectile-root-top-down
     projectile-root-bottom-up
-    projectile-root-top-down-recurring)))
+    projectile-root-top-down-recurring))
+    (projectile-switch-project-action #'projectile-dired))
 
 (use-package dashboard
   :ensure t
@@ -162,18 +164,16 @@
   :custom
   (lsp-ui-doc-position 'at-point))
 
-;; (use-package perspective
-;;   :ensure t
-;;   :bind
-;;   ("C-x C-b" . persp-counsel-switch-buffer)
-;;   :custom
-;;   (persp-mode-prefix-key (kbd "C-c b"))
-;;   :init
-;;   (setq persp-state-default-file (expand-file-name ".perspective" user-emacs-directory))
-;;   (add-hook 'kill-emacs-hook #'persp-state-save)
-;;   (if (file-exists-p persp-state-default-file)
-;;     (persp-state-load persp-state-default-file))
-;;   (persp-mode))
+(use-package perspective
+  :ensure t
+  :custom
+  (persp-mode-prefix-key (kbd "C-c b"))
+  :init
+  (setq persp-state-default-file (expand-file-name ".perspective" user-emacs-directory))
+  ;; (add-hook 'kill-emacs-hook #'persp-state-save)
+  ;; (if (file-exists-p persp-state-default-file)
+  ;;   (persp-state-load persp-state-default-file))
+  (persp-mode))
 
 (use-package vterm
   :ensure t)
@@ -237,9 +237,12 @@
 (use-package consult
   :ensure t
   :bind
-  ("C-c s" . consult-line)
-  ("C-c b" . consult-buffer)
-  ("C-c :" . consult-goto-line))
+  ("C-s" . consult-line)
+  ("C-c C-b" . consult-buffer)
+  ("C-c :" . consult-goto-line)
+  :config
+  (consult-customize consult--source-buffer :hidden t :default nil)
+  (add-to-list 'consult-buffer-sources persp-consult-source))
 
 (use-package corfu
   :ensure t
@@ -263,4 +266,6 @@
   (add-to-list 'completion-at-point-functions #'yasnippet-capf))
 
 
-
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
