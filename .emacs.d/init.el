@@ -35,6 +35,19 @@
   (let ((buffer (generate-new-buffer-name "*vterm*")))
     (vterm buffer)))
 
+(defun close-user-buffers-and-open-dashboard ()
+  "Close all user-opened buffers and open the *dashboard* buffer."
+  (interactive)
+  (switch-to-buffer "*dashboard*")
+  (let ((buffers (buffer-list)))
+    (dolist (buffer buffers)
+      (with-current-buffer buffer
+        ;; Check if the buffer's name does not start and end with *, indicating it's a user buffer.
+        (unless (or (string-match "^\\*" (buffer-name))
+                    (string-match "\\*$" (buffer-name)))
+          (kill-buffer buffer))))))
+
+
 ;;keybinds
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (define-key global-map (kbd "C-c q") 'delete-window)
@@ -44,6 +57,7 @@
 (define-key global-map (kbd "C-c d") 'delete-other-windows)
 (define-key global-map (kbd "C-c t") 'open-new-vterm)
 (define-key global-map (kbd "C-c /") 'comment-line)
+(define-key global-map (kbd "C-c C-q") 'close-user-buffers-and-open-dashboard)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
