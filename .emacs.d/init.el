@@ -10,6 +10,11 @@
 (setq frame-title-format nil)
 ; defaults write org.gnu.Emacs HideDocumentIcon YES
 
+;indenting
+(setq-default tab-width 2)
+(setq-default indent-tabs-mode nil)
+(setq js-indent-level 2)
+
 (setq custom-file "~/.emacs.d/custom-set-vars.el")
 
 (let ((auto-save-dir (concat user-emacs-directory "auto-save/")))
@@ -157,15 +162,21 @@
   :bind (("C-c g" . magit-status)))
 
 (use-package lsp-java
-  :ensure t)
+  :ensure t
+  :after lsp
+  :config
+  (setq lsp-java-save-actions-organize-imports t))
 
 (use-package lsp-mode
   :ensure t
   :commands (lsp lsp-deferred)
   :hook (
          (js-mode . lsp)
+         (js-ts-mode . lsp)
 	 (typescript-mode . lsp)
+	 (typescript-ts-mode . lsp)
 	 (java-mode . lsp)
+	 (java-ts-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :init
   (setq lsp-keymap-prefix "C-c l")
@@ -263,6 +274,8 @@
   :ensure t
   :custom
   (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-auto-delay 0)
   :init
   (global-corfu-mode))
 
