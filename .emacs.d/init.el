@@ -8,9 +8,9 @@
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 (setq ns-use-proxy-icon nil)
 (setq frame-title-format nil)
-; defaults write org.gnu.Emacs HideDocumentIcon YES
+;; defaults write org.gnu.Emacs HideDocumentIcon YES
 
-;indenting
+;; indenting
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
 (setq js-indent-level 2)
@@ -35,10 +35,14 @@
 
 ;;custom functions
 (defun open-new-vterm ()
-  "open a new vterm instance"
+  "Open a new vterm instance in the Projectile project's root directory."
   (interactive)
-  (let ((buffer (generate-new-buffer-name "*vterm*")))
-    (vterm buffer)))
+  (let ((project-root (projectile-project-root))
+        (buffer (generate-new-buffer-name "*vterm*")))
+    ;; Temporarily change the default directory to the project root when opening vterm
+    (let ((default-directory (or project-root default-directory)))
+      (vterm buffer))))
+
 
 (defun close-user-buffers-and-open-dashboard ()
   "Close all user-opened buffers and open the *dashboard* buffer."
@@ -111,22 +115,24 @@
   :ensure t
   :init
   (projectile-mode +1)
-  :bind (:map projectile-mode-map
-              ("C-c p" . projectile-command-map))
+  :bind (
+         :map projectile-mode-map
+         ("C-c p" . projectile-command-map)
+         :map projectile-command-map
+         ("s r" . counsel-projectile-rg))
   :custom
   (projectile-project-root-functions
-  '(projectile-root-local
-    projectile-root-marked
-    projectile-root-top-down
-    projectile-root-bottom-up
-    projectile-root-top-down-recurring))
-    (projectile-switch-project-action #'projectile-dired))
+   '(projectile-root-local
+     projectile-root-marked
+     projectile-root-top-down
+     projectile-root-bottom-up
+     projectile-root-top-down-recurring)))
 
 (use-package dashboard
   :ensure t
   :init
   (setq dashboard-items '((recents   . 5)
-                        (projects  . 20)))
+                          (projects  . 20)))
   :config
   (dashboard-setup-startup-hook))
 
@@ -136,21 +142,21 @@
 (defhydra hydra-manage-windows (:color red)
   "manage windows"
   ("s" shrink-window-horizontally "shrink horizontally" :column "Sizing")
-    ("e" enlarge-window-horizontally "enlarge horizontally")
-    ("b" balance-windows "balance window height")
-    ("m" maximize-window "maximize current window")
-    ("M" minimize-window "minimize current window")
-    
-    ("H" split-window-below "split horizontally" :column "Split management")
-    ("v" split-window-right "split vertically")
-    ("d" delete-window "delete current window")
-    ("x" delete-other-windows "delete-other-windows")
+  ("e" enlarge-window-horizontally "enlarge horizontally")
+  ("b" balance-windows "balance window height")
+  ("m" maximize-window "maximize current window")
+  ("M" minimize-window "minimize current window")
+  
+  ("H" split-window-below "split horizontally" :column "Split management")
+  ("v" split-window-right "split vertically")
+  ("d" delete-window "delete current window")
+  ("x" delete-other-windows "delete-other-windows")
 
-    ("h" windmove-left "← window" :color blue :column "Navigation")
-    ("j" windmove-down "↓ window")
-    ("k" windmove-up "↑ window")
-    ("l" windmove-right "→ window")
-    ("q" nil "quit menu" :color blue :column nil))
+  ("h" windmove-left "← window" :color blue :column "Navigation")
+  ("j" windmove-down "↓ window")
+  ("k" windmove-up "↑ window")
+  ("l" windmove-right "→ window")
+  ("q" nil "quit menu" :color blue :column nil))
 
 (global-set-key (kbd "C-c C-j") 'hydra-manage-windows/body)
 
@@ -171,8 +177,8 @@
   :ensure t
   :commands (lsp lsp-deferred)
   :hook (
-         (js-mode . lsp)
-         (js-ts-mode . lsp)
+   (js-mode . lsp)
+   (js-ts-mode . lsp)
 	 (typescript-mode . lsp)
 	 (typescript-ts-mode . lsp)
 	 (java-mode . lsp)
