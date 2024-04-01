@@ -177,6 +177,8 @@
 	 (typescript-ts-mode . lsp)
 	 (java-mode . lsp)
 	 (java-ts-mode . lsp)
+   (c-mode . lsp)
+   (c-ts-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :init
   (setq lsp-keymap-prefix "C-c l")
@@ -210,6 +212,7 @@
    (typescript-mode . js-ts-mode)
    (json-mode . json-ts-mode)
    (css-mode . css-ts-mode)
+   (c-mode . c-ts-mode)
    (java-mode . java-ts-mode)))
 
 (use-package yasnippet
@@ -270,32 +273,35 @@
   (consult-customize consult--source-buffer :hidden t :default nil)
   (add-to-list 'consult-buffer-sources persp-consult-source))
 
-(use-package corfu
-  :ensure t
-  :custom
-  (corfu-cycle t)
-  (corfu-auto t)
-  (corfu-auto-delay 0)
-  :init
-  (global-corfu-mode))
+;; (use-package corfu
+;;   :ensure t
+;;   :custom
+;;   (corfu-cycle t)
+;;   (corfu-auto t)
+;;   (corfu-auto-delay 0)
+;;   :init
+;;   (global-corfu-mode))
 
-(use-package cape
-  :ensure t
-  :init
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file))
+;; (use-package cape
+;;   :ensure t
+;;   :init
+;;   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+;;   (add-to-list 'completion-at-point-functions #'cape-file))
 
-(use-package yasnippet-capf
+;; (use-package yasnippet-capf
+;;   :ensure t
+;;   :after cape
+;;   :bind
+;;   ("C-c y" . yasnippet-capf)
+;;   :config
+;;   (add-to-list 'completion-at-point-functions #'yasnippet-capf))
+
+(use-package company
   :ensure t
-  :after cape
-  :bind
-  ("C-c y" . yasnippet-capf)
-  :config
-  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
+  :hook
+  (afer-init . global-company-mode))
 
 
 (use-package rainbow-delimiters
   :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
-
-
