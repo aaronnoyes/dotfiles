@@ -273,34 +273,28 @@
   (consult-customize consult--source-buffer :hidden t :default nil)
   (add-to-list 'consult-buffer-sources persp-consult-source))
 
-;; (use-package corfu
-;;   :ensure t
-;;   :custom
-;;   (corfu-cycle t)
-;;   (corfu-auto t)
-;;   (corfu-auto-delay 0)
-;;   :init
-;;   (global-corfu-mode))
-
-;; (use-package cape
-;;   :ensure t
-;;   :init
-;;   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-;;   (add-to-list 'completion-at-point-functions #'cape-file))
-
-;; (use-package yasnippet-capf
-;;   :ensure t
-;;   :after cape
-;;   :bind
-;;   ("C-c y" . yasnippet-capf)
-;;   :config
-;;   (add-to-list 'completion-at-point-functions #'yasnippet-capf))
-
-(use-package company
+(use-package corfu
   :ensure t
-  :hook
-  (afer-init . global-company-mode))
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-auto-delay 0)
+  :init
+  (global-corfu-mode))
 
+(use-package cape
+  :ensure t
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file))
+
+(use-package yasnippet-capf
+  :ensure t
+  :after cape
+  :bind
+  ("C-c y" . yasnippet-capf)
+  :config
+  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
 
 (use-package rainbow-delimiters
   :ensure t
