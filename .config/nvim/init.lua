@@ -43,6 +43,7 @@ require('lazy').setup({
 		config = function()
 			require("luasnip.loaders.from_vscode").lazy_load()
 		end
+
 	},
 	{
 		"hrsh7th/nvim-cmp",
@@ -57,6 +58,7 @@ require('lazy').setup({
 		},
 		config = function()
 			local cmp = require("cmp")
+			local luasnip = require("luasnip")
 			vim.opt.completeopt = {"menu", "menuone", "noselect"}
 
 			cmp.setup({
@@ -74,7 +76,7 @@ require('lazy').setup({
 					["<C-f>"] = cmp.mapping.scroll_docs(4),
 					["<C-Space>"] = cmp.mapping.complete(),
 					["<C-e>"] = cmp.mapping.abort(),
-					["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+					["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
@@ -217,4 +219,51 @@ require('lazy').setup({
 			-- refer to the configuration section below
 		}
 	},
-})
+	{
+		"nvim-telescope/telescope.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim"
+		},
+		keys = {
+			{ "<leader><space>", "<cmd>Telescope find_files<cr>", desc = "find files" },
+			{ "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "find files" },
+		},
+		config = function ()
+			local telescope = require("telescope")
+			local actions = require("telescope.actions")
+			telescope.setup{
+				defaults = {
+					-- Default configuration for telescope goes here:
+					-- config_key = value,
+					mappings = {
+						i = {
+							-- map actions.which_key to <C-h> (default: <C-/>)
+							-- actions.which_key shows the mappings for your picker,
+							-- e.g. git_{create, delete, ...}_branch for the git_branches picker
+							["<C-h>"] = "which_key"
+						},
+						n = {
+							["q"] = actions.close
+						}
+					}
+				},
+				pickers = {
+					-- Default configuration for builtin pickers goes here:
+					-- picker_name = {
+						--   picker_config_key = value,
+						--   ...
+						-- }
+						-- Now the picker_config_key will be applied every time you call this
+						-- builtin picker
+					},
+					extensions = {
+						-- Your extension configuration goes here:
+						-- extension_name = {
+							--   extension_config_key = value,
+							-- }
+							-- please take a look at the readme of the extension you want to configure
+						}
+					}
+				end
+			},
+		})
