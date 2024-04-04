@@ -18,8 +18,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 --install lazy
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
-	local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-	vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
+	local lazyrepo = 'https://github.com/folke/lazy.nvim.git' vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
@@ -30,6 +29,16 @@ require('lazy').setup({
 		priority = 1000,
 		config = function()
 			vim.cmd([[colorscheme modus_vivendi]])
+		end
+	},
+	{ "rafamadriz/friendly-snippets" },
+	{
+		"L3MON4D3/LuaSnip",
+		version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+		build = "make install_jsregexp",
+		dependencies = { "rafamadriz/friendly-snippets" },
+		config = function()
+			require("luasnip.loaders.from_vscode").lazy_load()
 		end
 	},
 	{
@@ -87,13 +96,26 @@ require('lazy').setup({
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
 					{ name = "nvim_lua" },
-					{ name = "luasnip" }, -- For luasnip users.
-					-- { name = "orgmode" },
+					{ name = "luasnip" },
 				}, {
 					{ name = "buffer" },
 					{ name = "path" },
 				}),
 			})
 		end
-	}
+	},
+	{
+		"nvim-treesitter/nvim-treesitter",
+		config = function()
+			local treesitter = require("nvim-treesitter.configs")
+			treesitter.setup({
+				ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
+				auto_install = true,
+				highlight = {
+					enable = true,
+					additional_vim_regex_highlighting = false,
+				}
+			})
+		end
+	},
 })
