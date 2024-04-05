@@ -1,38 +1,42 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 vim.g.have_nerd_font = false
 
 --opts
 vim.opt.number = true
-vim.opt.mouse = 'a'
+vim.opt.mouse = "a"
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.inccommand = 'split'
+vim.opt.inccommand = "split"
 vim.opt.scrolloff = 10
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.bo.softtabstop = 2
 
 --keymaps
-vim.keymap.set('i', 'jk', '<Esc>')
+vim.keymap.set("i", "jk", "<Esc>")
 vim.opt.hlsearch = true
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-vim.api.nvim_set_keymap('n', '<leader>w', '<cmd>w<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>q', '<cmd>q<CR>', { noremap = true, silent = true })
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.api.nvim_set_keymap("n", "<leader>w", "<cmd>w<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>q", "<cmd>q<CR>", { noremap = true, silent = true })
 
 --install lazy
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-	local lazyrepo = 'https://github.com/folke/lazy.nvim.git' vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
-
-require('lazy').setup({
-	{ 
-		"miikanissi/modus-themes.nvim", 
+require("lazy").setup({
+	{
+		"miikanissi/modus-themes.nvim",
 		lazy = false,
 		priority = 1000,
 		config = function()
 			vim.cmd([[colorscheme modus_vivendi]])
-		end
+		end,
 	},
 	{ "rafamadriz/friendly-snippets" },
 	{
@@ -42,8 +46,7 @@ require('lazy').setup({
 		dependencies = { "rafamadriz/friendly-snippets" },
 		config = function()
 			require("luasnip.loaders.from_vscode").lazy_load()
-		end
-
+		end,
 	},
 	{
 		"hrsh7th/nvim-cmp",
@@ -59,7 +62,7 @@ require('lazy').setup({
 		config = function()
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
-			vim.opt.completeopt = {"menu", "menuone", "noselect"}
+			vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 			cmp.setup({
 				snippet = {
@@ -107,7 +110,7 @@ require('lazy').setup({
 					{ name = "path" },
 				}),
 			})
-		end
+		end,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -119,9 +122,9 @@ require('lazy').setup({
 				highlight = {
 					enable = true,
 					additional_vim_regex_highlighting = false,
-				}
+				},
 			})
-		end
+		end,
 	},
 	{
 		"neovim/nvim-lspconfig",
@@ -129,42 +132,42 @@ require('lazy').setup({
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			{ "folke/neodev.nvim", opts = {} },
-			'WhoIsSethDaniel/mason-tool-installer.nvim'
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
 		},
 		config = function()
 			-- Use LspAttach autocommand to only map the following keys
 			-- after the language server attaches to the current buffer
-			vim.api.nvim_create_autocmd('LspAttach', {
-				group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+			vim.api.nvim_create_autocmd("LspAttach", {
+				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 				callback = function(ev)
 					-- Enable completion triggered by <c-x><c-o>
-					vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+					vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
 					-- Buffer local mappings.
 					-- See `:help vim.lsp.*` for documentation on any of the below functions
 					local opts = { buffer = ev.buf }
-					vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-					vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-					vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-					vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-					vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-					vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-					vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-					vim.keymap.set('n', '<space>wl', function()
+					vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+					vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+					vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+					vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+					vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
+					vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
+					vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
+					vim.keymap.set("n", "<space>wl", function()
 						print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 					end, opts)
-					vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-					vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-					vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-					vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-					vim.keymap.set('n', '<space>f', function()
-						vim.lsp.buf.format { async = true }
+					vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
+					vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
+					vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
+					vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+					vim.keymap.set("n", "<space>f", function()
+						vim.lsp.buf.format({ async = true })
 					end, opts)
 				end,
 			})
 
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 			local servers = {
 				clangd = {},
@@ -175,7 +178,7 @@ require('lazy').setup({
 					settings = {
 						Lua = {
 							completion = {
-								callSnippet = 'Replace',
+								callSnippet = "Replace",
 							},
 							-- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
 							-- diagnostics = { disable = { 'missing-fields' } },
@@ -188,23 +191,23 @@ require('lazy').setup({
 
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
-				'stylua',
+				"stylua",
 			})
-			require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
-			require('mason-lspconfig').setup {
+			require("mason-lspconfig").setup({
 				handlers = {
 					function(server_name)
 						local server = servers[server_name] or {}
 						-- This handles overriding only values explicitly passed
 						-- by the server configuration above. Useful when disabling
 						-- certain features of an LSP (for example, turning off formatting for tsserver)
-						server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-						require('lspconfig')[server_name].setup(server)
+						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+						require("lspconfig")[server_name].setup(server)
 					end,
 				},
-			}
-		end
+			})
+		end,
 	},
 	{
 		"folke/which-key.nvim",
@@ -217,21 +220,21 @@ require('lazy').setup({
 			-- your configuration comes here
 			-- or leave it empty to use the default settings
 			-- refer to the configuration section below
-		}
+		},
 	},
 	{
 		"nvim-telescope/telescope.nvim",
 		dependencies = {
-			"nvim-lua/plenary.nvim"
+			"nvim-lua/plenary.nvim",
 		},
 		keys = {
 			{ "<leader><space>", "<cmd>Telescope find_files<cr>", desc = "find files" },
 			{ "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "find files" },
 		},
-		config = function ()
+		config = function()
 			local telescope = require("telescope")
 			local actions = require("telescope.actions")
-			telescope.setup{
+			telescope.setup({
 				defaults = {
 					-- Default configuration for telescope goes here:
 					-- config_key = value,
@@ -240,74 +243,100 @@ require('lazy').setup({
 							-- map actions.which_key to <C-h> (default: <C-/>)
 							-- actions.which_key shows the mappings for your picker,
 							-- e.g. git_{create, delete, ...}_branch for the git_branches picker
-							["<C-h>"] = "which_key"
+							["<C-h>"] = "which_key",
 						},
 						n = {
-							["q"] = actions.close
-						}
-					}
+							["q"] = actions.close,
+						},
+					},
 				},
 				pickers = {
 					-- Default configuration for builtin pickers goes here:
 					-- picker_name = {
-						--   picker_config_key = value,
-						--   ...
-						-- }
-						-- Now the picker_config_key will be applied every time you call this
-						-- builtin picker
-					},
-					extensions = {
-						-- Your extension configuration goes here:
-						-- extension_name = {
-							--   extension_config_key = value,
-							-- }
-							-- please take a look at the readme of the extension you want to configure
-						}
-					}
-				end
-			},
-			{
-				"JoosepAlviste/nvim-ts-context-commentstring",
-				lazy = true,
-				opts = {
-					enable_autocmd = false,
+					--   picker_config_key = value,
+					--   ...
+					-- }
+					-- Now the picker_config_key will be applied every time you call this
+					-- builtin picker
 				},
-			},
-			{
-				"echasnovski/mini.comment",
-				event = "VeryLazy",
-				opts = {
-					options = {
-						custom_commentstring = function()
-							return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
-						end,
-					},
+				extensions = {
+					-- Your extension configuration goes here:
+					-- extension_name = {
+					--   extension_config_key = value,
+					-- }
+					-- please take a look at the readme of the extension you want to configure
 				},
-			},
-			{
-				'echasnovski/mini.pairs',
-				version = '*',
-				config = function ()
-					require("mini.pairs").setup()
-				end
-			},
-			{
-				'echasnovski/mini.surround',
-				version = '*',
-				config = function ()
-					require("mini.surround").setup()
+			})
+		end,
+	},
+	{
+		"JoosepAlviste/nvim-ts-context-commentstring",
+		lazy = true,
+		opts = {
+			enable_autocmd = false,
+		},
+	},
+	{
+		"echasnovski/mini.comment",
+		event = "VeryLazy",
+		opts = {
+			options = {
+				custom_commentstring = function()
+					return require("ts_context_commentstring.internal").calculate_commentstring()
+						or vim.bo.commentstring
 				end,
-				mappings = {
-					add = 'sa', -- Add surrounding in Normal and Visual modes
-					delete = 'sd', -- Delete surrounding
-					find = 'sf', -- Find surrounding (to the right)
-					find_left = 'sF', -- Find surrounding (to the left)
-					highlight = 'sh', -- Highlight surrounding
-					replace = 'sr', -- Replace surrounding
-					update_n_lines = 'sn', -- Update `n_lines`
-
-					suffix_last = 'l', -- Suffix to search with "prev" method
-					suffix_next = 'n', -- Suffix to search with "next" method
-				},
 			},
-		})
+		},
+	},
+	{
+		"echasnovski/mini.pairs",
+		version = "*",
+		config = function()
+			require("mini.pairs").setup()
+		end,
+	},
+	{
+		"echasnovski/mini.surround",
+		version = "*",
+		config = function()
+			require("mini.surround").setup()
+		end,
+		mappings = {
+			add = "sa", -- Add surrounding in Normal and Visual modes
+			delete = "sd", -- Delete surrounding
+			find = "sf", -- Find surrounding (to the right)
+			find_left = "sF", -- Find surrounding (to the left)
+			highlight = "sh", -- Highlight surrounding
+			replace = "sr", -- Replace surrounding
+			update_n_lines = "sn", -- Update `n_lines`
+
+			suffix_last = "l", -- Suffix to search with "prev" method
+			suffix_next = "n", -- Suffix to search with "next" method
+		},
+	},
+	{
+		"stevearc/conform.nvim",
+		config = function()
+			require("conform").setup({
+				formatters_by_ft = {
+					lua = { "stylua" },
+					-- Conform will run multiple formatters sequentially
+					python = { "isort", "black" },
+					-- Use a sub-list to run only the first available formatter
+					javascript = { { "prettierd", "prettier" } },
+				},
+				format_on_save = {
+					-- These options will be passed to conform.format()
+					timeout_ms = 500,
+					lsp_fallback = true,
+				},
+			})
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				pattern = "*",
+				callback = function(args)
+					require("conform").format({ bufnr = args.buf })
+				end,
+			})
+		end,
+	},
+})
