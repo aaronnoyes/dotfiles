@@ -231,6 +231,7 @@ require("lazy").setup({
 		keys = {
 			{ "<leader><space>", "<cmd>Telescope find_files<cr>", desc = "find files" },
 			{ "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "find files" },
+			{ "<leader>sb", "<cmd>Telescope buffers<cr>", desc = "find buffers" },
 		},
 		config = function()
 			local telescope = require("telescope")
@@ -356,7 +357,7 @@ require("lazy").setup({
 			-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
 		},
 		keys = {
-			{ "<leader>e", "<cmd>Neotree toggle<cr>", desc = "files tree" },
+			{ "<leader>e", "<cmd>Neotree toggle<cr>", desc = "file tree" },
 		},
 		config = function()
 			require("neo-tree").setup({
@@ -367,6 +368,7 @@ require("lazy").setup({
 					},
 				},
 			})
+			vim.cmd("hi NeoTreeNormal guibg=black")
 		end,
 	},
 })
