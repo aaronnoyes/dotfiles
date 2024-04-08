@@ -21,6 +21,8 @@ vim.opt.hlsearch = true
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.api.nvim_set_keymap("n", "<leader>w", "<cmd>w<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>q", "<cmd>q<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "H", "<cmd>bprevious<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "L", "<cmd>bnext<CR>", { noremap = true, silent = true })
 
 --install lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
