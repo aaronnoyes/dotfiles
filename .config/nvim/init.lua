@@ -371,4 +371,14 @@ require("lazy").setup({
 			vim.cmd("hi NeoTreeNormal guibg=black")
 		end,
 	},
+	{
+		"stevearc/oil.nvim",
+		opts = {
+			default_file_explorer = false,
+		},
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		keys = {
+			{ "<leader>o", "<cmd>Oil<cr>", desc = "oil" },
+		},
+	},
 })
