@@ -33,12 +33,20 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+	-- {
+	-- 	"miikanissi/modus-themes.nvim",
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		vim.cmd([[colorscheme modus_vivendi]])
+	-- 	end,
+	-- },
 	{
-		"miikanissi/modus-themes.nvim",
+		"bluz71/vim-moonfly-colors",
 		lazy = false,
 		priority = 1000,
 		config = function()
-			vim.cmd([[colorscheme modus_vivendi]])
+			vim.cmd([[colorscheme moonfly]])
 		end,
 	},
 	{ "rafamadriz/friendly-snippets" },
@@ -370,7 +378,7 @@ require("lazy").setup({
 					},
 				},
 			})
-			vim.cmd("hi NeoTreeNormal guibg=black")
+			-- vim.cmd("hi NeoTreeNormal guibg=black")
 		end,
 	},
 	{
