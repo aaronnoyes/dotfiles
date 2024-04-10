@@ -14,6 +14,8 @@ vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.bo.softtabstop = 2
 vim.opt.signcolumn = "yes"
+vim.opt.autoindent = true
+vim.opt.smartindent = true
 
 --keymaps
 vim.keymap.set("i", "jk", "<Esc>")
