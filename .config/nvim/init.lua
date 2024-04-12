@@ -25,6 +25,7 @@ vim.api.nvim_set_keymap("n", "<leader>w", "<cmd>w<CR>", { noremap = true, silent
 vim.api.nvim_set_keymap("n", "<leader>q", "<cmd>q<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "H", "<cmd>bprevious<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "L", "<cmd>bnext<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>bd", "<cmd>bdelete<CR>", { noremap = true, silent = true })
 
 --install lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -261,6 +262,7 @@ require("lazy").setup({
 						},
 						n = {
 							["q"] = actions.close,
+							["<c-d>"] = require("telescope.actions").delete_buffer,
 						},
 					},
 				},
