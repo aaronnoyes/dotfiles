@@ -16,6 +16,7 @@ vim.bo.softtabstop = 2
 vim.opt.signcolumn = "yes"
 vim.opt.autoindent = true
 vim.opt.smartindent = true
+vim.opt.termguicolors = true
 
 --keymaps
 vim.keymap.set("i", "jk", "<Esc>")
@@ -402,6 +403,16 @@ require("lazy").setup({
 				log_level = "error",
 				auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
 			})
+		end,
+	},
+	{
+		"akinsho/bufferline.nvim",
+		version = "*",
+		dependencies = "nvim-tree/nvim-web-devicons",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("bufferline").setup()
 		end,
 	},
 })
