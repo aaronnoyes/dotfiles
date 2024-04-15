@@ -371,7 +371,7 @@ require("lazy").setup({
 			-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
 		},
 		keys = {
-			{ "<leader>e", "<cmd>Neotree toggle<cr>", desc = "file tree" },
+			{ "<leader>e", "<cmd>Neotree float<cr>", desc = "file tree" },
 		},
 		config = function()
 			require("neo-tree").setup({
