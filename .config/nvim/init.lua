@@ -414,4 +414,13 @@ require("lazy").setup({
       require("bufferline").setup()
     end,
   },
+  {
+    "FabijanZulj/blame.nvim",
+    config = function()
+      require("blame").setup()
+    end,
+    keys = {
+      { "<leader>gb", "<cmd>BlameToggle<cr>", desc = "toggle git blame" },
+    },
+  },
 })
