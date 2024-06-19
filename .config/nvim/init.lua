@@ -191,9 +191,6 @@ require("lazy").setup({
 
       local servers = {
         clangd = {},
-        -- rust_analyzer = {},
-        tsserver = {},
-
         lua_ls = {
           settings = {
             Lua = {
@@ -246,15 +243,18 @@ require("lazy").setup({
     "nvim-telescope/telescope.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
+      "benfowler/telescope-luasnip.nvim",
     },
     keys = {
       { "<leader><space>", "<cmd>Telescope find_files<cr>", desc = "find files" },
       { "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "find files" },
       { "<leader>sb", "<cmd>Telescope buffers<cr>", desc = "find buffers" },
+      { "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "find snippets" },
     },
     config = function()
       local telescope = require("telescope")
       local actions = require("telescope.actions")
+      telescope.load_extension("luasnip")
       telescope.setup({
         defaults = {
           -- Default configuration for telescope goes here:
@@ -343,14 +343,10 @@ require("lazy").setup({
           lua = { "stylua" },
           -- Conform will run multiple formatters sequentially
           python = { "isort", "black" },
-          typescript = { { "prettierd", "prettier" } },
-          typescriptreact = { { "prettierd", "prettier" } },
-          javascript = { { "prettierd", "prettier" } },
-          javascriptreact = { { "prettierd", "prettier" } },
         },
         format_on_save = {
           timeout_ms = 500,
-          lsp_fallback = false,
+          lsp_fallback = true,
         },
       })
     end,
