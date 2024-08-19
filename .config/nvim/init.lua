@@ -17,6 +17,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 vim.opt.termguicolors = true
+vim.opt.cursorline = true
 
 --keymaps
 vim.keymap.set("i", "jk", "<Esc>")
@@ -250,6 +251,7 @@ require("lazy").setup({
       { "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "find files" },
       { "<leader>sb", "<cmd>Telescope buffers<cr>", desc = "find buffers" },
       { "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "find snippets" },
+      { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "resume" },
     },
     config = function()
       local telescope = require("telescope")
@@ -367,7 +369,7 @@ require("lazy").setup({
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
     },
     keys = {
-      { "<leader>e", "<cmd>Neotree float<cr>", desc = "file tree" },
+      { "<leader>e", "<cmd>Neotree float reveal<cr>", desc = "file tree" },
     },
     config = function()
       require("neo-tree").setup({
@@ -375,6 +377,11 @@ require("lazy").setup({
         filesystem = {
           filtered_items = {
             hide_gitignored = true,
+          },
+          follow_current_file = {
+            enabled = true, -- This will find and focus the file in the active buffer every time
+            --               -- the current file is changed while the tree is open.
+            leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
           },
         },
       })
