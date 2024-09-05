@@ -28,7 +28,7 @@
  '(custom-safe-themes
    '("4c7228157ba3a48c288ad8ef83c490b94cb29ef01236205e360c2c4db200bb18" "d445c7b530713eac282ecdeea07a8fa59692c83045bf84dd112dd738c7bcad1d" default))
  '(package-selected-packages
-   '(treesit-auto tree-sitter-langs tree-sitter lsp-ui lsp-mode @ flycheck typescript-mode corfu consult-projectile ripgrep projectile marginalia vertico orderless consult nord-theme gruvbox-theme)))
+   '(cape treesit-auto tree-sitter-langs tree-sitter lsp-ui lsp-mode @ flycheck typescript-mode corfu consult-projectile ripgrep projectile marginalia vertico orderless consult nord-theme gruvbox-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -84,6 +84,19 @@
   (corfu-popupinfo-mode)
   (global-corfu-mode))
 
+;; Enable Corfu completion UI
+;; See the Corfu README for more configuration tips.
+(use-package corfu
+  :init
+  (global-corfu-mode))
+
+(use-package cape
+  :ensure t
+  :init
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block))
+
 (use-package ripgrep
   :ensure t)
 
@@ -105,6 +118,7 @@
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
          (typescript-mode . lsp)
 	 (javascript-mode . lsp)
+	 (tsx-ts-mode . lsp)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)

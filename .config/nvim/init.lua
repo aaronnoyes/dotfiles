@@ -38,20 +38,19 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  -- {
-  -- 	"miikanissi/modus-themes.nvim",
-  -- 	lazy = false,
-  -- 	priority = 1000,
-  -- 	config = function()
-  -- 		vim.cmd([[colorscheme modus_vivendi]])
-  -- 	end,
-  -- },
   {
-    "bluz71/vim-moonfly-colors",
+    "shaunsingh/nord.nvim",
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd([[colorscheme moonfly]])
+      vim.g.nord_contrast = true
+      vim.g.nord_borders = false
+      vim.g.nord_disable_background = false
+      vim.g.nord_italic = false
+      vim.g.nord_uniform_diff_background = true
+      vim.g.nord_bold = false
+
+      require("nord").set()
     end,
   },
   { "rafamadriz/friendly-snippets" },
