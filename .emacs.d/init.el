@@ -28,7 +28,7 @@
  '(custom-safe-themes
    '("4c7228157ba3a48c288ad8ef83c490b94cb29ef01236205e360c2c4db200bb18" "d445c7b530713eac282ecdeea07a8fa59692c83045bf84dd112dd738c7bcad1d" default))
  '(package-selected-packages
-   '(tree-sitter-langs tree-sitter lsp-ui lsp-mode @ flycheck typescript-mode corfu consult-projectile ripgrep projectile marginalia vertico orderless consult nord-theme gruvbox-theme)))
+   '(treesit-auto tree-sitter-langs tree-sitter lsp-ui lsp-mode @ flycheck typescript-mode corfu consult-projectile ripgrep projectile marginalia vertico orderless consult nord-theme gruvbox-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -119,9 +119,12 @@
 
 (use-package tree-sitter
   :ensure t
-  :hook (
-  (prog-mode . global-tree-sitter-mode)
-  (prog-mode . tree-sitter-hl-mode)))
+  :hook (prog-mode . tree-sitter-hl-mode))
 
-(use-package tree-sitter-langs
-  :ensure t)
+(use-package treesit-auto
+  :ensure t
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
