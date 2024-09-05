@@ -1,5 +1,13 @@
-(tool-bar-mode 0)
 (scroll-bar-mode -1)
+(tool-bar-mode -1)
+(tooltip-mode -1)
+(menu-bar-mode -1)
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+(setq ns-use-proxy-icon nil)
+(setq frame-title-format nil)
+; defaults write org.gnu.Emacs HideDocumentIcon YES
+
 (global-display-line-numbers-mode 1)
 
 (require 'package)
@@ -20,7 +28,7 @@
  '(custom-safe-themes
    '("4c7228157ba3a48c288ad8ef83c490b94cb29ef01236205e360c2c4db200bb18" "d445c7b530713eac282ecdeea07a8fa59692c83045bf84dd112dd738c7bcad1d" default))
  '(package-selected-packages
-   '(marginalia vertico orderless consult nord-theme gruvbox-theme)))
+   '(tree-sitter-langs tree-sitter lsp-ui lsp-mode @ flycheck typescript-mode corfu consult-projectile ripgrep projectile marginalia vertico orderless consult nord-theme gruvbox-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -47,8 +55,7 @@
   (savehist-mode))
 
 (use-package consult
-  :ensure t
-  )
+  :ensure t)
 
 (use-package orderless
   :ensure t
@@ -65,3 +72,56 @@
          ("M-A" . marginalia-cycle))
   :init
   (marginalia-mode))
+
+(use-package corfu
+  :ensure t
+  :custom
+  (corfu-auto t)
+  (corfu-preview-current t)
+  (corfu-popupinfo-delay '(0 . 0))
+  (corfu-cycle t)
+  :init
+  (corfu-popupinfo-mode)
+  (global-corfu-mode))
+
+(use-package ripgrep
+  :ensure t)
+
+(use-package projectile
+  :ensure t
+  :after (ripgrep)
+  :init
+  (projectile-mode))
+
+(use-package consult-projectile
+  :ensure t
+  :after (consult projectile))
+
+(use-package lsp-mode
+  :ensure t
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (typescript-mode . lsp)
+	 (javascript-mode . lsp)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+(use-package lsp-ui
+  :ensure t
+  :hook ((lsp-mode . lsp-ui-mode)))
+
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
+(use-package tree-sitter
+  :ensure t
+  :hook (
+  (prog-mode . global-tree-sitter-mode)
+  (prog-mode . tree-sitter-hl-mode)))
+
+(use-package tree-sitter-langs
+  :ensure t)
