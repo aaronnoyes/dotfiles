@@ -12,23 +12,17 @@
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
-;; and `package-pinned-packages`. Most users will not need or want to do this.
-;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("4c7228157ba3a48c288ad8ef83c490b94cb29ef01236205e360c2c4db200bb18" "d445c7b530713eac282ecdeea07a8fa59692c83045bf84dd112dd738c7bcad1d" default))
  '(package-selected-packages
-   '(cape treesit-auto tree-sitter-langs tree-sitter lsp-ui lsp-mode @ flycheck typescript-mode corfu consult-projectile ripgrep projectile marginalia vertico orderless consult nord-theme gruvbox-theme)))
+   '(corfu marginalia consult vertico cape orderless magit company counsel ivy treesit-auto tree-sitter flycheck lsp-mode projectile ripgrep nord-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -36,66 +30,10 @@
  ;; If there is more than one, they won't work right.
  )
 
-(add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
-
 (use-package nord-theme
   :ensure t
   :init
   (load-theme 'nord t))
-
-;; Vertico + Consult + Orderless + Embark + Marginalia + Corfu.
-(use-package vertico
-  :ensure t
-  :init
-  (vertico-mode))
-
-(use-package savehist
-  :ensure t
-  :init
-  (savehist-mode))
-
-(use-package consult
-  :ensure t)
-
-(use-package orderless
-  :ensure t
-  :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
-
-(use-package marginalia
-  :ensure t
-  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
-  ;; available in the *Completions* buffer, add it to the
-  ;; `completion-list-mode-map'.
-  :bind (:map minibuffer-local-map
-         ("M-A" . marginalia-cycle))
-  :init
-  (marginalia-mode))
-
-(use-package corfu
-  :ensure t
-  :custom
-  (corfu-auto t)
-  (corfu-preview-current t)
-  (corfu-popupinfo-delay '(0 . 0))
-  (corfu-cycle t)
-  :init
-  (corfu-popupinfo-mode)
-  (global-corfu-mode))
-
-;; Enable Corfu completion UI
-;; See the Corfu README for more configuration tips.
-(use-package corfu
-  :init
-  (global-corfu-mode))
-
-(use-package cape
-  :ensure t
-  :init
-  (add-hook 'completion-at-point-functions #'cape-dabbrev)
-  (add-hook 'completion-at-point-functions #'cape-file)
-  (add-hook 'completion-at-point-functions #'cape-elisp-block))
 
 (use-package ripgrep
   :ensure t)
@@ -106,39 +44,62 @@
   :init
   (projectile-mode))
 
-(use-package consult-projectile
-  :ensure t
-  :after (consult projectile))
-
-(use-package lsp-mode
-  :ensure t
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (typescript-mode . lsp)
-	 (javascript-mode . lsp)
-	 (tsx-ts-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
-
-(use-package lsp-ui
-  :ensure t
-  :hook ((lsp-mode . lsp-ui-mode)))
-
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode))
 
-(use-package tree-sitter
-  :ensure t
-  :hook (prog-mode . tree-sitter-hl-mode))
-
-(use-package treesit-auto
+(use-package vertico
   :ensure t
   :custom
-  (treesit-auto-install 'prompt)
-  :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode))
+  (vertico-cycle t)
+  :init
+  (vertico-mode))
+
+(use-package savehist
+  :ensure t
+  :init
+  (savehist-mode))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
+
+(use-package consult
+  :ensure t)
+
+(use-package marginalia
+  :ensure t
+  :bind (:map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
+  :init
+  (marginalia-mode))
+
+(use-package corfu
+  :ensure t
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  :init
+  (global-corfu-mode))
+
+(use-package cape
+  :ensure t
+  ;; Bind prefix keymap providing all Cape commands under a mnemonic key.
+  ;; Press C-c p ? to for help.
+  :bind ("C-c p" . cape-prefix-map) ;; Alternative keys: M-p, M-+, ...
+  ;; Alternatively bind Cape commands individually.
+  ;; :bind (("C-c p d" . cape-dabbrev)
+  ;;        ("C-c p h" . cape-history)
+  ;;        ("C-c p f" . cape-file)
+  ;;        ...)
+  :init
+  ;; Add to the global default value of `completion-at-point-functions' which is
+  ;; used by `completion-at-point'.  The order of the functions matters, the
+  ;; first function returning a result wins.  Note that the list of buffer-local
+  ;; completion functions takes precedence over the global list.
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-block))

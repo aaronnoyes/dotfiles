@@ -19,6 +19,8 @@ vim.opt.smartindent = true
 vim.opt.termguicolors = true
 vim.opt.cursorline = true
 
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+
 --keymaps
 vim.keymap.set("i", "jk", "<Esc>")
 vim.opt.hlsearch = true
