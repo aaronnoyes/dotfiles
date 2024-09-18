@@ -413,7 +413,7 @@ require("lazy").setup({
     version = "*",
     dependencies = "nvim-tree/nvim-web-devicons",
     lazy = false,
-    priority = 1000,
+    priority = 900,
     config = function()
       require("bufferline").setup()
     end,
