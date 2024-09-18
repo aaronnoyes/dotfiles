@@ -427,4 +427,11 @@ require("lazy").setup({
       { "<leader>gb", "<cmd>BlameToggle<cr>", desc = "toggle git blame" },
     },
   },
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("lualine").setup()
+    end,
+  },
 })
