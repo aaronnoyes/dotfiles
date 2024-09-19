@@ -249,6 +249,13 @@ require("lazy").setup({
     },
     keys = {
       { "<leader><space>", "<cmd>Telescope find_files<cr>", desc = "find files" },
+      {
+        "<leader>h",
+        function()
+          require("telescope.builtin").find_files({ hidden = true, no_ignore = true })
+        end,
+        desc = "find hidden files",
+      },
       { "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "find files" },
       { "<leader>sb", "<cmd>Telescope buffers<cr>", desc = "find buffers" },
       { "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "find snippets" },
