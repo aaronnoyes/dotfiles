@@ -8,7 +8,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(vterm which-key vertico spacemacs-theme orderless marginalia lua-mode corfu cape)))
+   '(lsp-mode flycheck consult-projectile projectile-ripgrep projectile ripgrep consult vterm which-key vertico spacemacs-theme orderless marginalia lua-mode corfu cape)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -106,3 +106,36 @@
       (vterm buffer)))
   :bind
   (("C-c t" . my/vterm-new)))
+
+(use-package consult
+  :ensure t)
+
+(use-package ripgrep
+  :ensure t)
+
+(use-package projectile
+  :ensure t
+  :init
+  (projectile-mode +1))
+
+(use-package consult-projectile
+  :ensure t)
+
+(use-package projectile-ripgrep
+  :ensure t)
+
+(use-package lsp-mode
+  :ensure t
+  :hook ((prog-mode . lsp)  ;; Automatically start LSP in any programming mode
+         (lsp-mode . lsp-enable-which-key-integration))  ;; Optional: integrates LSP with `which-key`
+  :commands lsp
+  :custom
+  (lsp-prefer-flymake nil))
+
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode)  ;; Enable flycheck globally
+  :custom
+  (flycheck-check-syntax-automatically '(mode-enabled save))
+  (flycheck-idle-change-delay 2))
