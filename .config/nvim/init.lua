@@ -192,6 +192,18 @@ require("lazy").setup({
       capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
       local servers = {
+        arduino_language_server = {
+          cmd = {
+            "/Users/aaronnoyes/arduino-language-server/arduino-language-server",
+            "-cli=/opt/homebrew/bin/arduino-cli",
+            "-clangd=/Users/aaronnoyes/.local/share/nvim/mason/bin/clangd",
+            "-fqbn=rp2040:rp2040:rpipico",
+            "-cli-config=/Users/aaronnoyes/Library/Arduino15/arduino-cli.yaml",
+          },
+          init_options = {
+            initialization_timeout = 10000, -- Adjust as needed
+          },
+        },
         clangd = {},
         lua_ls = {
           settings = {
