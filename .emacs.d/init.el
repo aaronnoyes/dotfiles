@@ -1,6 +1,26 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(setq-default cursor-type 'bar)
+(global-display-line-numbers-mode t)
+
+(global-set-key (kbd "C-c n") 'next-buffer)
+(global-set-key (kbd "C-c p") 'previous-buffer)
+
+(dolist (dir '("backups" "auto-save" "locks"))
+  (let ((path (expand-file-name dir user-emacs-directory)))
+    (unless (file-directory-p path)
+      (make-directory path t))))
+
+(setq auto-save-file-name-transforms
+      `((".*" ,(concat user-emacs-directory "auto-save/") t)))
+
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name
+                 (concat user-emacs-directory "backups")))))
+
+(setq lock-file-name-transforms
+      `((".*" ,(expand-file-name "locks/" user-emacs-directory) t)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -8,7 +28,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(lsp-mode flycheck consult-projectile projectile-ripgrep projectile ripgrep consult vterm which-key vertico spacemacs-theme orderless marginalia lua-mode corfu cape)))
+   '(perspective rainbow-delimiters lsp-mode flycheck consult-projectile projectile-ripgrep projectile ripgrep consult vterm which-key vertico spacemacs-theme orderless marginalia lua-mode corfu cape)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -108,7 +128,15 @@
   (("C-c t" . my/vterm-new)))
 
 (use-package consult
-  :ensure t)
+  :ensure t
+  :config
+  ;; Define a prefix map for Consult
+  (define-prefix-command 'my-consult-map)
+  (global-set-key (kbd "C-c C-c") 'my-consult-map)
+
+  ;; Keybindings within the prefix map
+  (define-key my-consult-map (kbd "l") 'consult-line)
+  (define-key my-consult-map (kbd "b") 'consult-buffer))
 
 (use-package ripgrep
   :ensure t)
@@ -127,8 +155,11 @@
 (use-package lsp-mode
   :ensure t
   :hook ((prog-mode . lsp)  ;; Automatically start LSP in any programming mode
-         (lsp-mode . lsp-enable-which-key-integration))  ;; Optional: integrates LSP with `which-key`
+         (lsp-mode . lsp-enable-which-key-integration)
+         (emacs-lisp-mode . (lambda () (lsp-mode -1))))  ;; Disable LSP in emacs-lisp-mode
   :commands lsp
+  :init
+  (setq lsp-keymap-prefix "C-c l")
   :custom
   (lsp-prefer-flymake nil))
 
@@ -139,3 +170,14 @@
   :custom
   (flycheck-check-syntax-automatically '(mode-enabled save))
   (flycheck-idle-change-delay 2))
+
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package perspective
+  :ensure t
+  :custom
+  (persp-mode-prefix-key (kbd "C-c c"))
+  :init
+  (persp-mode))
