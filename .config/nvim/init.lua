@@ -462,4 +462,98 @@ require("lazy").setup({
       })
     end,
   },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    ---@module "ibl"
+    ---@type ibl.config
+    opts = {},
+  },
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+  },
+  {
+    "utilyre/barbecue.nvim",
+    name = "barbecue",
+    version = "*",
+    dependencies = {
+      "SmiteshP/nvim-navic",
+      "nvim-tree/nvim-web-devicons", -- optional dependency
+    },
+    opts = {
+      -- configurations go here
+    },
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    opts = {},
+    config = function(_, opts)
+      require("lsp_signature").setup(opts)
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local bufnr = args.buf
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if vim.tbl_contains({ "null-ls" }, client.name) then -- blacklist lsp
+            return
+          end
+          require("lsp_signature").on_attach({
+            -- ... setup options here ...
+          }, bufnr)
+        end,
+      })
+    end,
+  },
+  {
+    "filipdutescu/renamer.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    keys = {
+      { "<leader>r", "<cmd>lua require('renamer').rename()<cr>", desc = "rename" },
+    },
+    config = function(_, opts)
+      local mappings_utils = require("renamer.mappings.utils")
+      require("renamer").setup({
+        -- The popup title, shown if `border` is true
+        title = "Rename",
+        -- The padding around the popup content
+        padding = {
+          top = 0,
+          left = 0,
+          bottom = 0,
+          right = 0,
+        },
+        -- The minimum width of the popup
+        min_width = 15,
+        -- The maximum width of the popup
+        max_width = 45,
+        -- Whether or not to shown a border around the popup
+        border = true,
+        -- The characters which make up the border
+        border_chars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+        -- Whether or not to highlight the current word references through LSP
+        show_refs = true,
+        -- Whether or not to add resulting changes to the quickfix list
+        with_qf_list = true,
+        -- Whether or not to enter the new name through the UI or Neovim's `input`
+        -- prompt
+        with_popup = true,
+        -- The keymaps available while in the `renamer` buffer. The example below
+        -- overrides the default values, but you can add others as well.
+        mappings = {
+          ["<c-i>"] = mappings_utils.set_cursor_to_start,
+          ["<c-a>"] = mappings_utils.set_cursor_to_end,
+          ["<c-e>"] = mappings_utils.set_cursor_to_word_end,
+          ["<c-b>"] = mappings_utils.set_cursor_to_word_start,
+          ["<c-c>"] = mappings_utils.clear_line,
+          ["<c-u>"] = mappings_utils.undo,
+          ["<c-r>"] = mappings_utils.redo,
+        },
+        -- Custom handler to be run after successfully renaming the word. Receives
+        -- the LSP 'textDocument/rename' raw response as its parameter.
+        handler = nil,
+      })
+    end,
+  },
 })
