@@ -26,6 +26,7 @@ vim.keymap.set("i", "jk", "<Esc>")
 vim.opt.hlsearch = true
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.api.nvim_set_keymap("n", "<leader>w", "<cmd>w<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>W", "<cmd>noautocmd w<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>q", "<cmd>q<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "H", "<cmd>bprevious<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "L", "<cmd>bnext<CR>", { noremap = true, silent = true })
@@ -254,6 +255,9 @@ require("lazy").setup({
       vim.o.timeout = true
       vim.o.timeoutlen = 300
     end,
+    keys = {
+      { "<leader>?", "<cmd>WhichKey<cr>", desc = "which-key" },
+    },
     opts = {
       -- your configuration comes here
       -- or leave it empty to use the default settings
