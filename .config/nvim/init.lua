@@ -586,4 +586,20 @@ require("lazy").setup({
       exclude = {}, -- exclude these filetypes
     },
   },
+  {
+    "tadmccorkle/markdown.nvim",
+    ft = "markdown", -- or 'event = "VeryLazy"'
+    opts = {
+      on_attach = function(bufnr)
+        local map = vim.keymap.set
+        local opts = { buffer = bufnr }
+        map({ "n" }, "<leader>o", "<Cmd>MDListItemBelow<CR>", opts)
+        map({ "n" }, "<leader>O", "<Cmd>MDListItemBelow<CR>", opts)
+        map({ "i" }, "<c-o>", "<Cmd>MDListItemBelow<CR>", opts)
+        map({ "i" }, "<c-O>", "<Cmd>MDListItemAbove<CR>", opts)
+        map("n", "t", "<Cmd>MDTaskToggle<CR>", opts)
+        map("x", "<M-c>", ":MDTaskToggle<CR>", opts)
+      end,
+    },
+  },
 })
