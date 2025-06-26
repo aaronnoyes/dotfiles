@@ -76,10 +76,12 @@ require("lazy").setup({
       "hrsh7th/cmp-cmdline",
       "saadparwaiz1/cmp_luasnip",
       "L3MON4D3/LuaSnip",
+      "mlaursen/vim-react-snippets",
     },
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
+      require("vim-react-snippets").lazy_load()
       vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
       cmp.setup({
