@@ -31,6 +31,14 @@ vim.api.nvim_set_keymap("n", "<leader>q", "<cmd>q<CR>", { noremap = true, silent
 vim.api.nvim_set_keymap("n", "H", "<cmd>bprevious<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "L", "<cmd>bnext<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>bd", "<cmd>bdelete<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>bo", function()
+  local curr = vim.fn.bufnr("%")
+  for _, bufnr in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
+    if bufnr.bufnr ~= curr then
+      vim.cmd("bd " .. bufnr.bufnr)
+    end
+  end
+end, { desc = "Close all other buffers" })
 
 --install lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
