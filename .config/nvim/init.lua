@@ -444,16 +444,16 @@ require("lazy").setup({
       })
     end,
   },
-  {
-    "akinsho/bufferline.nvim",
-    version = "*",
-    dependencies = "nvim-tree/nvim-web-devicons",
-    lazy = false,
-    priority = 900,
-    config = function()
-      require("bufferline").setup()
-    end,
-  },
+  -- {
+  --   "akinsho/bufferline.nvim",
+  --   version = "*",
+  --   dependencies = "nvim-tree/nvim-web-devicons",
+  --   lazy = false,
+  --   priority = 900,
+  --   config = function()
+  --     require("bufferline").setup()
+  --   end,
+  -- },
   {
     "FabijanZulj/blame.nvim",
     config = function()
@@ -482,38 +482,6 @@ require("lazy").setup({
   {
     "HiPhish/rainbow-delimiters.nvim",
   },
-  {
-    "utilyre/barbecue.nvim",
-    name = "barbecue",
-    version = "*",
-    dependencies = {
-      "SmiteshP/nvim-navic",
-      "nvim-tree/nvim-web-devicons", -- optional dependency
-    },
-    opts = {
-      -- configurations go here
-    },
-  },
-  -- {
-  --   "ray-x/lsp_signature.nvim",
-  --   event = "VeryLazy",
-  --   opts = {},
-  --   config = function(_, opts)
-  --     require("lsp_signature").setup(opts)
-  --     vim.api.nvim_create_autocmd("LspAttach", {
-  --       callback = function(args)
-  --         local bufnr = args.buf
-  --         local client = vim.lsp.get_client_by_id(args.data.client_id)
-  --         if vim.tbl_contains({ "null-ls" }, client.name) then -- blacklist lsp
-  --           return
-  --         end
-  --         require("lsp_signature").on_attach({
-  --           -- ... setup options here ...
-  --         }, bufnr)
-  --       end,
-  --     })
-  --   end,
-  -- },
   {
     "filipdutescu/renamer.nvim",
     dependencies = {
@@ -608,12 +576,6 @@ require("lazy").setup({
       end,
     },
   },
-  -- {
-  --   "ggandor/leap.nvim",
-  --   config = function()
-  --     require("leap").set_default_mappings()
-  --   end,
-  -- },
   {
     "folke/flash.nvim",
     event = "VeryLazy",
