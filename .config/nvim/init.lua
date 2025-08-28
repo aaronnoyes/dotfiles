@@ -18,6 +18,7 @@ vim.opt.autoindent = true
 vim.opt.smartindent = true
 vim.opt.termguicolors = true
 vim.opt.cursorline = true
+vim.opt.relativenumber = true
 
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
@@ -348,13 +349,13 @@ require("lazy").setup({
       },
     },
   },
-  {
-    "echasnovski/mini.pairs",
-    version = "*",
-    config = function()
-      require("mini.pairs").setup()
-    end,
-  },
+  -- {
+  --   "echasnovski/mini.pairs",
+  --   version = "*",
+  --   config = function()
+  --     require("mini.pairs").setup()
+  --   end,
+  -- },
   {
     "echasnovski/mini.surround",
     version = "*",
@@ -383,10 +384,10 @@ require("lazy").setup({
           -- Conform will run multiple formatters sequentially
           python = { "isort", "black" },
         },
-        format_on_save = {
-          timeout_ms = 500,
-          lsp_fallback = true,
-        },
+        -- format_on_save = {
+        --   timeout_ms = 500,
+        --   lsp_fallback = true,
+        -- },
       })
     end,
   },
