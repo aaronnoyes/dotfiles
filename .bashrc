@@ -10,7 +10,7 @@ export TERM=screen-256color
 
 #sdl2
 export LD_LIBRARY_PATH="/usr/local/lib"
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
