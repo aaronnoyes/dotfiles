@@ -32,6 +32,8 @@ vim.api.nvim_set_keymap("n", "<leader>q", "<cmd>q<CR>", { noremap = true, silent
 vim.api.nvim_set_keymap("n", "H", "<cmd>bprevious<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "L", "<cmd>bnext<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>bd", "<cmd>bdelete<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>bd", "<cmd>bdelete<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>o", "<c-w>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>bo", function()
   local curr = vim.fn.bufnr("%")
   for _, bufnr in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
@@ -286,10 +288,10 @@ require("lazy").setup({
         end,
         desc = "find hidden files",
       },
-      { "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "find files" },
-      { "<leader>sb", "<cmd>Telescope buffers<cr>", desc = "find buffers" },
-      { "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "find snippets" },
-      { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "resume" },
+      { "<leader>sg",      "<cmd>Telescope live_grep<cr>",  desc = "find files" },
+      { "<leader>sb",      "<cmd>Telescope buffers<cr>",    desc = "find buffers" },
+      { "<leader>ss",      "<cmd>Telescope luasnip<cr>",    desc = "find snippets" },
+      { "<leader>sR",      "<cmd>Telescope resume<cr>",     desc = "resume" },
     },
     config = function()
       local telescope = require("telescope")
@@ -363,16 +365,16 @@ require("lazy").setup({
       require("mini.surround").setup()
     end,
     mappings = {
-      add = "sa", -- Add surrounding in Normal and Visual modes
-      delete = "sd", -- Delete surrounding
-      find = "sf", -- Find surrounding (to the right)
-      find_left = "sF", -- Find surrounding (to the left)
-      highlight = "sh", -- Highlight surrounding
-      replace = "sr", -- Replace surrounding
+      add = "sa",            -- Add surrounding in Normal and Visual modes
+      delete = "sd",         -- Delete surrounding
+      find = "sf",           -- Find surrounding (to the right)
+      find_left = "sF",      -- Find surrounding (to the left)
+      highlight = "sh",      -- Highlight surrounding
+      replace = "sr",        -- Replace surrounding
       update_n_lines = "sn", -- Update `n_lines`
 
-      suffix_last = "l", -- Suffix to search with "prev" method
-      suffix_next = "n", -- Suffix to search with "next" method
+      suffix_last = "l",     -- Suffix to search with "prev" method
+      suffix_next = "n",     -- Suffix to search with "next" method
     },
   },
   {
@@ -417,7 +419,7 @@ require("lazy").setup({
             hide_gitignored = true,
           },
           follow_current_file = {
-            enabled = true, -- This will find and focus the file in the active buffer every time
+            enabled = true,          -- This will find and focus the file in the active buffer every time
             --               -- the current file is changed while the tree is open.
             leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
           },
@@ -433,7 +435,7 @@ require("lazy").setup({
     },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
-      { "<leader>o", "<cmd>Oil<cr>", desc = "oil" },
+      { "<leader>O", "<cmd>Oil<cr>", desc = "oil" },
     },
   },
   {
@@ -546,10 +548,10 @@ require("lazy").setup({
         -- we try to get the foreground from the highlight groups or fallback color
         color = { "Normal", "#ffffff" },
         term_bg = "#000000", -- if guibg=NONE, this will be used to calculate text color
-        inactive = false, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
+        inactive = false,    -- when true, other windows will be fully dimmed (unless they contain the same buffer)
       },
-      context = 10, -- amount of lines we will try to show around the current line
-      treesitter = true, -- use treesitter when available for the filetype
+      context = 10,          -- amount of lines we will try to show around the current line
+      treesitter = true,     -- use treesitter when available for the filetype
       -- treesitter is used to automatically expand the visible text,
       -- but you can further control the types of nodes that should always be fully expanded
       expand = { -- for treesitter, we we always try to expand to the top-most ancestor with these types
@@ -582,13 +584,13 @@ require("lazy").setup({
     event = "VeryLazy",
     ---@type Flash.Config
     opts = {},
-  -- stylua: ignore
+    -- stylua: ignore
     keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+      { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+      { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+      { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+      { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
     },
   },
 })
