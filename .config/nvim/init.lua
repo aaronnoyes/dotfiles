@@ -144,8 +144,6 @@ require("lazy").setup({
     config = function()
       local treesitter = require("nvim-treesitter.configs")
       treesitter.setup({
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
-        auto_install = true,
         highlight = {
           enable = true,
           additional_vim_regex_highlighting = false,
@@ -201,47 +199,7 @@ require("lazy").setup({
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
-      local servers = {
-        arduino_language_server = {
-          cmd = {
-            "/Users/aaronnoyes/arduino-language-server/arduino-language-server",
-            "-cli=/opt/homebrew/bin/arduino-cli",
-            "-clangd=/Users/aaronnoyes/.local/share/nvim/mason/bin/clangd",
-            "-fqbn=rp2040:rp2040:rpipico",
-            "-cli-config=/Users/aaronnoyes/Library/Arduino15/arduino-cli.yaml",
-          },
-          init_options = {
-            initialization_timeout = 10000, -- Adjust as needed
-          },
-        },
-        clangd = {},
-        lua_ls = {
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = "Replace",
-              },
-              workspace = {
-                checkThirdParty = false,
-                telemetry = { enable = false },
-                library = {
-                  "${3rd}/love2d/library",
-                },
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-            },
-          },
-        },
-      }
-
       require("mason").setup()
-
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
-        "stylua",
-      })
-      require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
       require("mason-lspconfig").setup({
         handlers = {
@@ -351,32 +309,6 @@ require("lazy").setup({
       },
     },
   },
-  -- {
-  --   "echasnovski/mini.pairs",
-  --   version = "*",
-  --   config = function()
-  --     require("mini.pairs").setup()
-  --   end,
-  -- },
-  {
-    "echasnovski/mini.surround",
-    version = "*",
-    config = function()
-      require("mini.surround").setup()
-    end,
-    mappings = {
-      add = "sa",            -- Add surrounding in Normal and Visual modes
-      delete = "sd",         -- Delete surrounding
-      find = "sf",           -- Find surrounding (to the right)
-      find_left = "sF",      -- Find surrounding (to the left)
-      highlight = "sh",      -- Highlight surrounding
-      replace = "sr",        -- Replace surrounding
-      update_n_lines = "sn", -- Update `n_lines`
-
-      suffix_last = "l",     -- Suffix to search with "prev" method
-      suffix_next = "n",     -- Suffix to search with "next" method
-    },
-  },
   {
     "stevearc/conform.nvim",
     config = function()
@@ -429,35 +361,6 @@ require("lazy").setup({
     end,
   },
   {
-    "stevearc/oil.nvim",
-    opts = {
-      default_file_explorer = false,
-    },
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    keys = {
-      { "<leader>O", "<cmd>Oil<cr>", desc = "oil" },
-    },
-  },
-  {
-    "rmagatti/auto-session",
-    config = function()
-      require("auto-session").setup({
-        log_level = "error",
-        auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
-      })
-    end,
-  },
-  -- {
-  --   "akinsho/bufferline.nvim",
-  --   version = "*",
-  --   dependencies = "nvim-tree/nvim-web-devicons",
-  --   lazy = false,
-  --   priority = 900,
-  --   config = function()
-  --     require("bufferline").setup()
-  --   end,
-  -- },
-  {
     "FabijanZulj/blame.nvim",
     config = function()
       require("blame").setup()
@@ -484,113 +387,5 @@ require("lazy").setup({
   },
   {
     "HiPhish/rainbow-delimiters.nvim",
-  },
-  {
-    "filipdutescu/renamer.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    keys = {
-      { "<leader>r", "<cmd>lua require('renamer').rename()<cr>", desc = "rename" },
-    },
-    config = function(_, opts)
-      local mappings_utils = require("renamer.mappings.utils")
-      require("renamer").setup({
-        -- The popup title, shown if `border` is true
-        title = "Rename",
-        -- The padding around the popup content
-        padding = {
-          top = 0,
-          left = 0,
-          bottom = 0,
-          right = 0,
-        },
-        -- The minimum width of the popup
-        min_width = 15,
-        -- The maximum width of the popup
-        max_width = 45,
-        -- Whether or not to shown a border around the popup
-        border = true,
-        -- The characters which make up the border
-        border_chars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-        -- Whether or not to highlight the current word references through LSP
-        show_refs = true,
-        -- Whether or not to add resulting changes to the quickfix list
-        with_qf_list = true,
-        -- Whether or not to enter the new name through the UI or Neovim's `input`
-        -- prompt
-        with_popup = true,
-        -- The keymaps available while in the `renamer` buffer. The example below
-        -- overrides the default values, but you can add others as well.
-        mappings = {
-          ["<c-i>"] = mappings_utils.set_cursor_to_start,
-          ["<c-a>"] = mappings_utils.set_cursor_to_end,
-          ["<c-e>"] = mappings_utils.set_cursor_to_word_end,
-          ["<c-b>"] = mappings_utils.set_cursor_to_word_start,
-          ["<c-c>"] = mappings_utils.clear_line,
-          ["<c-u>"] = mappings_utils.undo,
-          ["<c-r>"] = mappings_utils.redo,
-        },
-        -- Custom handler to be run after successfully renaming the word. Receives
-        -- the LSP 'textDocument/rename' raw response as its parameter.
-        handler = nil,
-      })
-    end,
-  },
-  {
-    "folke/twilight.nvim",
-    keys = {
-      { "<leader>t", "<cmd>Twilight<cr>", desc = "twilight" },
-    },
-    opts = {
-      dimming = {
-        alpha = 0.25, -- amount of dimming
-        -- we try to get the foreground from the highlight groups or fallback color
-        color = { "Normal", "#ffffff" },
-        term_bg = "#000000", -- if guibg=NONE, this will be used to calculate text color
-        inactive = false,    -- when true, other windows will be fully dimmed (unless they contain the same buffer)
-      },
-      context = 10,          -- amount of lines we will try to show around the current line
-      treesitter = true,     -- use treesitter when available for the filetype
-      -- treesitter is used to automatically expand the visible text,
-      -- but you can further control the types of nodes that should always be fully expanded
-      expand = { -- for treesitter, we we always try to expand to the top-most ancestor with these types
-        "function",
-        "method",
-        "table",
-        "if_statement",
-      },
-      exclude = {}, -- exclude these filetypes
-    },
-  },
-  {
-    "tadmccorkle/markdown.nvim",
-    ft = "markdown", -- or 'event = "VeryLazy"'
-    opts = {
-      on_attach = function(bufnr)
-        local map = vim.keymap.set
-        local opts = { buffer = bufnr }
-        map({ "n" }, "<leader>o", "<Cmd>MDListItemBelow<CR>", opts)
-        map({ "n" }, "<leader>O", "<Cmd>MDListItemBelow<CR>", opts)
-        map({ "i" }, "<c-o>", "<Cmd>MDListItemBelow<CR>", opts)
-        map({ "i" }, "<c-O>", "<Cmd>MDListItemAbove<CR>", opts)
-        map("n", "t", "<Cmd>MDTaskToggle<CR>", opts)
-        map("x", "<M-c>", ":MDTaskToggle<CR>", opts)
-      end,
-    },
-  },
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    ---@type Flash.Config
-    opts = {},
-    -- stylua: ignore
-    keys = {
-      { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
-      { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
-      { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
-      { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
-    },
   },
 })
